@@ -17,6 +17,8 @@
         android:layout_marginRight="3dp"
         android:background="@drawable/logout2" />
 
+    <include layout="@layout/content_main" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="395dp"
@@ -30,26 +32,14 @@
         android:layout_marginBottom="60dp"
         android:background="#EAE2E2">
 
-        <Button
-            android:id="@+id/savetime"
-            android:layout_width="143dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="350dp"
-            android:layout_marginRight="170dp"
-            android:text="Save"
-            android:textAllCaps="false"
-            android:textColor="#ffff"
-            android:background="@drawable/main_color"
-            android:textSize="20sp" />
-
-        <TextView
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_anchor="@+id/tableRow"
-            app:layout_anchorGravity="center" />
-
+            android:layout_gravity="bottom|right"
+            android:clickable="true"
+            android:src="@drawable/add_task_button"
+            app:backgroundTint="#EAE2E2" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <Button
@@ -82,19 +72,19 @@
                 android:background="@drawable/skip" />
 
             <Button
-                android:id="@+id/taskbutton"
-                android:layout_width="100dp"
-                android:layout_height="115dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/back" />
-
-            <Button
                 android:id="@+id/setbutton"
                 android:layout_width="100dp"
                 android:layout_height="115dp"
                 android:layout_marginLeft="5dp"
+                android:background="@drawable/set" />
+
+            <Button
+                android:id="@+id/tasksbutton"
+                android:layout_width="100dp"
+                android:layout_height="115dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/tasks" />
+                android:background="@drawable/back" />
         </TableRow>
     </TableLayout>
 

@@ -121,14 +121,14 @@
                 android:background="@drawable/skip" />
 
             <Button
-                android:id="@+id/taskbutton"
+                android:id="@+id/setbutton"
                 android:layout_width="100dp"
                 android:layout_height="115dp"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/set" />
 
             <Button
-                android:id="@+id/setbutton"
+                android:id="@+id/tasksbutton"
                 android:layout_width="100dp"
                 android:layout_height="115dp"
                 android:layout_marginLeft="5dp"

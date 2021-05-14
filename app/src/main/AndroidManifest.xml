@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SettimeActivity"></activity>
+        <activity android:name=".TaskActivity"></activity>
+        <activity android:name=".promtps2"></activity>
     </application>
 
 </manifest>

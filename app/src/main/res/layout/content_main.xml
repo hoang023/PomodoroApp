@@ -10,7 +10,7 @@
     android:paddingTop="5dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Task.MainTask"
-    tools:showIn="@layout/task_layout">
+    tools:showIn="@layout/activity_task">
 
     <ListView
         android:id="@+id/ListviewId"
