@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean timerRunning;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
