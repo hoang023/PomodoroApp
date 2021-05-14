@@ -13,6 +13,12 @@
         android:layout_marginTop="60dp"
         android:id="@+id/staticLayout" />
 
+<!--    <TextView-->
+<!--        android:background="@drawable/background_statistical"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:id="@+id/staticLayout" />-->
     <Button
         android:id="@+id/logoutbutton"
         android:layout_width="57dp"
