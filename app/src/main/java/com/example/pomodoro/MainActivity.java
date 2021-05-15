@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Button countdownStop;
     private CountDownTimer countDownTimer;
     private long timeLeftInMilliseconds = startTime;
-    private boolean timerRunning;
+    private boolean timerRunning ;
 
 
     @Override
@@ -65,12 +65,12 @@ public class MainActivity extends AppCompatActivity {
                 pause.setVisibility(View.GONE);
                 countdownStop.setVisibility(View.GONE);
                 countdownButton.setImageResource(R.drawable.pause);
+
                 timeLeftInMilliseconds = 0;
-                countDownTimer.cancel();
                 updateTimer();
-                timerRunning = false;
-                //countDownTimer.cancel();
-                //timerRunning = false;
+                if(timerRunning) {
+                    countDownTimer.cancel();
+                }
             }
         });
 
