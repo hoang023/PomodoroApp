@@ -134,14 +134,16 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="8dp">
         <TableRow>
+
             <Button
                 android:layout_width="171dp"
                 android:layout_height="75dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginRight="5dp"
                 android:layout_marginLeft="6dp"
+                android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/detailtbutton"
                 android:background="@drawable/stage" />
+
             <Button
             android:id="@+id/detailtbutton"
             android:layout_width="171dp"
