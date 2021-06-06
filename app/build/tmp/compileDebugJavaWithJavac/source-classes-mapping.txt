@@ -1,0 +1,47 @@
+com/example/pomodoro/SetTime/FocusDialog.java
+ com.example.pomodoro.SetTime.FocusDialog
+ com.example.pomodoro.SetTime.FocusDialog$1
+ com.example.pomodoro.SetTime.FocusDialog$2
+ com.example.pomodoro.SetTime.FocusDialog$SetTimeListener
+com/example/pomodoro/TasksFunctions/TasksActivity.java
+ com.example.pomodoro.TasksFunctions.TasksActivity
+ com.example.pomodoro.TasksFunctions.TasksActivity$1
+ com.example.pomodoro.TasksFunctions.TasksActivity$2
+com/example/pomodoro/TasksFunctions/TasksAdd.java
+ com.example.pomodoro.TasksFunctions.TasksAdd
+com/example/pomodoro/BuildConfig.java
+ com.example.pomodoro.BuildConfig
+com/example/pomodoro/MainActivity.java
+ com.example.pomodoro.MainActivity
+ com.example.pomodoro.MainActivity$1
+ com.example.pomodoro.MainActivity$2
+ com.example.pomodoro.MainActivity$3
+ com.example.pomodoro.MainActivity$4
+ com.example.pomodoro.MainActivity$5
+ com.example.pomodoro.MainActivity$6
+ com.example.pomodoro.MainActivity$7
+ com.example.pomodoro.MainActivity$8
+com/example/pomodoro/TasksFunctions/TasksUpdate.java
+ com.example.pomodoro.TasksFunctions.TasksUpdate
+com/example/pomodoro/StatisticalActivity.java
+ com.example.pomodoro.StatisticalActivity
+com/example/pomodoro/SetTime/BreakDialog.java
+ com.example.pomodoro.SetTime.BreakDialog
+ com.example.pomodoro.SetTime.BreakDialog$1
+ com.example.pomodoro.SetTime.BreakDialog$2
+ com.example.pomodoro.SetTime.BreakDialog$SetTimeListener
+com/example/pomodoro/SetTime/StagesDialog.java
+ com.example.pomodoro.SetTime.StagesDialog
+ com.example.pomodoro.SetTime.StagesDialog$1
+ com.example.pomodoro.SetTime.StagesDialog$2
+ com.example.pomodoro.SetTime.StagesDialog$SetTimeListener
+com/example/pomodoro/SetTime/SettimeActivity.java
+ com.example.pomodoro.SetTime.SettimeActivity
+ com.example.pomodoro.SetTime.SettimeActivity$1
+ com.example.pomodoro.SetTime.SettimeActivity$2
+ com.example.pomodoro.SetTime.SettimeActivity$3
+ com.example.pomodoro.SetTime.SettimeActivity$4
+ com.example.pomodoro.SetTime.SettimeActivity$5
+ com.example.pomodoro.SetTime.SettimeActivity$6
+ com.example.pomodoro.SetTime.SettimeActivity$7
+ com.example.pomodoro.SetTime.SettimeActivity$8
