@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/logoutbutton"
+        android:layout_width="57dp"
+        android:layout_height="49dp"
+        android:background="@drawable/logout2"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="5dp"/>
+
+    <ImageView
+        android:id="@+id/bg1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/bg1" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74dp"
+        android:background="@drawable/bg2" />
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:textSize="60dp"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"/>
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Focus"
+        android:textSize="35dp"
+        android:layout_below="@+id/time"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/play"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/play"
+        android:visibility="visible"/>
+
+    <Button
+        android:id="@+id/stop"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/stop"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/pause"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="300dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/backdgrouppause"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:background="@drawable/backgrouppause" />
+
+        <ImageView
+            android:id="@+id/pausebutton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/pause" />
+    </RelativeLayout>
+    <TableLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout2"
+        android:stretchColumns="*"
+        android:shrinkColumns="*"
+        android:layout_marginTop="5dp">
+
+        <TableRow android:layout_height="120dp">
+
+            <Button
+                android:id="@+id/skipbutton"
+                android:layout_width="100dp"
+                android:layout_height="115dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/skip" />
+
+            <Button
+                android:id="@+id/setbutton"
+                android:layout_width="100dp"
+                android:layout_height="115dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/set" />
+
+            <Button
+                android:id="@+id/tasksbutton"
+                android:layout_width="100dp"
+                android:layout_height="115dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/tasks" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp">
+        <TableRow>
+
+            <Button
+                android:layout_width="171dp"
+                android:layout_height="75dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/detailtbutton"
+                android:background="@drawable/stage" />
+
+            <Button
+            android:id="@+id/detailtbutton"
+            android:layout_width="171dp"
+            android:layout_height="75dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/detail" />
+
+        </TableRow>
+
+    </TableLayout>
+
+
+</RelativeLayout>
