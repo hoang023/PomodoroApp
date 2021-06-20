@@ -5,8 +5,6 @@
     android:id="@+id/relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
     <ImageView
         android:id="@+id/logoutbutton"
         android:layout_width="57dp"
@@ -156,8 +154,5 @@
             android:background="@drawable/detail" />
 
         </TableRow>
-
     </TableLayout>
-
-
 </RelativeLayout>
