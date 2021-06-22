@@ -9,17 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pomodoro">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".StatisticalActivity" />
+        <activity android:name=".SetTime.SettimeActivity" />
+        <activity android:name=".TasksFunctions.TasksActivity" />
+        <activity android:name=".TasksFunctions.TasksAdd" />
+        <activity android:name=".SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StatisticalActivity" />
-        <activity android:name=".SetTime.SettimeActivity"></activity>
-        <activity android:name=".TasksFunctions.TasksActivity"></activity>
-        <activity android:name=".TasksFunctions.TasksAdd"></activity>
     </application>
 
 </manifest>
