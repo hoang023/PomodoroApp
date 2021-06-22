@@ -26,7 +26,8 @@
 
     <EditText android:layout_height="wrap_content"
         android:id="@+id/edt_settime"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:inputType="number">
         <requestFocus></requestFocus>
     </EditText>
     <LinearLayout android:layout_width="match_parent"
