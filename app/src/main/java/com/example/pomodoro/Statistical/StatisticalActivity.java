@@ -1,4 +1,4 @@
-package com.example.pomodoro;
+package com.example.pomodoro.Statistical;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pomodoro.R;
 
 public class StatisticalActivity extends AppCompatActivity {
     @Override

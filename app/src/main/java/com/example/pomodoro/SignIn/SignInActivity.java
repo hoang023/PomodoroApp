@@ -1,8 +1,7 @@
-package com.example.pomodoro;
+package com.example.pomodoro.SignIn;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pomodoro.MainActivity;
+import com.example.pomodoro.R;
+import com.example.pomodoro.SignUp.SignUpActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -49,7 +51,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void Signup() {
-        Intent i = new Intent(SignInActivity.this,SignUpActivity.class);
+        Intent i = new Intent(SignInActivity.this, SignUpActivity.class);
         startActivity(i);
     }
 

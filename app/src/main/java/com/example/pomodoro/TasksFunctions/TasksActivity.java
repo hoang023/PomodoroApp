@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pomodoro.R;
 import com.example.pomodoro.SetTime.SettimeActivity;
-import com.example.pomodoro.StatisticalActivity;
+import com.example.pomodoro.Statistical.StatisticalActivity;
 
 public class TasksActivity extends AppCompatActivity {
 
