@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".StatisticalActivity" />
-        <activity android:name=".SetTime.SettimeActivity"
+        <activity android:name=".SetTimeFunctions.SettimeActivity"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".TasksFunctions.TasksActivity"></activity>
     </application>

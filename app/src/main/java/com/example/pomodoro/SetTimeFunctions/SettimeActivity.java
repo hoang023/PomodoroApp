@@ -1,4 +1,4 @@
-package com.example.pomodoro.SetTime;
+package com.example.pomodoro.SetTimeFunctions;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pomodoro.R;
-import com.example.pomodoro.StatisticalActivity;
+import com.example.pomodoro.Statistical.StatisticalActivity;
 import com.example.pomodoro.TasksFunctions.TasksActivity;
 
 public class SettimeActivity extends AppCompatActivity{
