@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pomodoro.R;
-import com.example.pomodoro.SetTime.SettimeActivity;
+import com.example.pomodoro.SetTimeFunctions.SettimeActivity;
 import com.example.pomodoro.StatisticalActivity;
 
 public class TasksActivity extends AppCompatActivity {
