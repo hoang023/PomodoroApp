@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pomodoro.SetTime.SettimeActivity;
+import com.example.pomodoro.SignIn.SignInActivity;
 import com.example.pomodoro.Statistical.StatisticalActivity;
 import com.example.pomodoro.TasksFunctions.TasksActivity;
 
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Button detail;
     private Button set;
     private Button tasks;
-
+    private Button log_out;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                Intent intent =new Intent(MainActivity.this, TasksActivity.class);
+                startActivity(intent);
+            }
+        });
+        log_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignInActivity.class);
                 startActivity(intent);
             }
         });
@@ -170,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
         detail = (Button) findViewById(R.id.detailtbutton );
         set = (Button) findViewById(R.id.setbutton);
         tasks = (Button) findViewById(R.id.tasksbutton);
+        log_out = (Button) findViewById(R.id.logoutbutton);
 
     }
 }
