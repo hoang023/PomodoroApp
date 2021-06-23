@@ -1,4 +1,4 @@
-package com.example.pomodoro.SetTime;
+package com.example.pomodoro.SetTimeFunctions;
 
 import android.app.Dialog;
 import android.content.Context;

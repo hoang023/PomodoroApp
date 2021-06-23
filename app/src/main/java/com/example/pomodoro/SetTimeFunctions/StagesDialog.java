@@ -1,4 +1,4 @@
-package com.example.pomodoro.SetTime;
+package com.example.pomodoro.SetTimeFunctions;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.pomodoro.R;
 
-public class BreakDialog extends Dialog {
+public class StagesDialog extends Dialog {
 
     interface SetTimeListener {
         public void settimeEntered(String settime);
@@ -23,9 +23,9 @@ public class BreakDialog extends Dialog {
     private Button buttonOK;
     private Button buttonCancel;
 
-    private BreakDialog.SetTimeListener listener;
+    private StagesDialog.SetTimeListener listener;
 
-    public BreakDialog(Context context, BreakDialog.SetTimeListener listener) {
+    public StagesDialog(Context context, StagesDialog.SetTimeListener listener) {
         super(context);
         this.context = context;
         this.listener = listener;
@@ -35,7 +35,7 @@ public class BreakDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.layout_breaktime);
+        setContentView(R.layout.layout_stages);
 
         this.edt_settime = (EditText) findViewById(R.id.edt_settime);
         this.buttonOK = (Button) findViewById(R.id.btnOk);
@@ -66,7 +66,7 @@ public class BreakDialog extends Dialog {
         }
         else {
             int val = Integer.parseInt(settime);
-            if ((val<1) || (val>20)){
+            if ((val<1) || (val>6)){
                 Toast.makeText(this.context, "The value is invalid" +
                         "\nPlease correct by the following rule", Toast.LENGTH_LONG).show();
                 return;}
