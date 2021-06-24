@@ -107,13 +107,16 @@ public class TasksAdd extends BottomSheetDialogFragment {
                 FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
                 String UId = currentU.getUid();
 
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference mData = database.getReference("User");
-                DatabaseReference mData1 = mData.child(UId);
-                DatabaseReference mData2 = mData1.child(year);
-                DatabaseReference mData3 = mData2.child(month+1);
+//                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                DatabaseReference mData = database.getReference("User");
+//                DatabaseReference mData1 = mData.child(UId);
+//                DatabaseReference mData2 = mData1.child(year);
+//                DatabaseReference mData3 = mData2.child(month+1);
 
-                mData3.child("Task").setValue(taskMap
+                DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
+
+                mData.child("Message").setValue("Hello World"
+//                mData.child("Task").setValue(taskMap
                         , (OnCompleteListener<DocumentReference>) task1 -> {
                     if (task1.isSuccessful()) {
                         Toast.makeText(context, "Task Saved", Toast.LENGTH_SHORT).show();
