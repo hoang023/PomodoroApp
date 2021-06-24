@@ -20,12 +20,17 @@ import androidx.annotation.Nullable;
 
 import com.example.pomodoro.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,7 +41,7 @@ import java.util.Objects;
 
 public class TasksAdd extends BottomSheetDialogFragment {
 
-    public static  final String TAG = "TasksAdd";
+    public static final String TAG = "TasksAdd";
 
     private EditText tasksEdt;
     private Button saveBtn;
@@ -44,13 +49,13 @@ public class TasksAdd extends BottomSheetDialogFragment {
     private Context context;
     private final Integer status = 0;
 
-    public static TasksAdd newInstance(){
+    public static TasksAdd newInstance() {
         return new TasksAdd();
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable  ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.new_tasks, container, false);
     }
 
@@ -70,10 +75,10 @@ public class TasksAdd extends BottomSheetDialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().equals("")){
+                if (s.toString().equals("")) {
                     saveBtn.setEnabled(false);
                     saveBtn.setBackgroundColor(Color.DKGRAY);
-                }else{
+                } else {
                     saveBtn.setEnabled(true);
                     saveBtn.setBackgroundColor(getResources().getColor(R.color.purple_500));
                 }
@@ -92,9 +97,6 @@ public class TasksAdd extends BottomSheetDialogFragment {
             if (task.isEmpty()) {
                 Toast.makeText(context, "Empty task not allowed !!!", Toast.LENGTH_LONG).show();
             } else {
-                //Date date = new Date();
-                //String year = (String) DateFormat.format("yyyy", date);
-                //String month = (String) DateFormat.format("MM", date);
                 String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
                 String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
 
@@ -102,30 +104,27 @@ public class TasksAdd extends BottomSheetDialogFragment {
 
                 taskMap.put(task, status);
 
-                //String UId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
-                //String UId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
                 String UId = currentU.getUid();
 
-//                FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                DatabaseReference mData = database.getReference("User");
-//                DatabaseReference mData1 = mData.child(UId);
-//                DatabaseReference mData2 = mData1.child(year);
-//                DatabaseReference mData3 = mData2.child(month+1);
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference mData = database.getReference("User");
+                DatabaseReference mData1 = mData.child(UId);
+                DatabaseReference mData2 = mData1.child(year);
+                DatabaseReference mData3 = mData2.child(month);
 
-                DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
-
-                mData.child("Message").setValue("Hello World"
-//                mData.child("Task").setValue(taskMap
-                        , (OnCompleteListener<DocumentReference>) task1 -> {
-                    if (task1.isSuccessful()) {
-                        Toast.makeText(context, "Task Saved", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, Objects.requireNonNull(task1.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                mData3.child("Task").push().setValue(taskMap, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        if (error == null) {
+                            Toast.makeText(context, "Task Saved", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Task Not Saved", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }).addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
+                });
             }
-        dismiss();
+            dismiss();
         });
     }
 
