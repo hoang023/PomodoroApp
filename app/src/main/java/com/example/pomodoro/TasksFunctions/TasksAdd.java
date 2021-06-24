@@ -1,10 +1,13 @@
 package com.example.pomodoro.TasksFunctions;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +19,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.pomodoro.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 
-import org.jetbrains.annotations.NotNull;
-
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class TasksAdd extends BottomSheetDialogFragment {
 
@@ -33,31 +40,26 @@ public class TasksAdd extends BottomSheetDialogFragment {
 
     private EditText tasksEdt;
     private Button saveBtn;
-    DatabaseReference mData;
     private FirebaseAuth auth;
     private Context context;
-    private Integer status = 0;
+    private final Integer status = 0;
 
     public static TasksAdd newInstance(){
         return new TasksAdd();
-
     }
 
     @Nullable
-    @org.jetbrains.annotations.Nullable
     @Override
-    public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable  ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.new_tasks, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         tasksEdt = view.findViewById(R.id.tasksEdt);
         saveBtn = view.findViewById(R.id.saveBtn);
-
-
 
 
         tasksEdt.addTextChangedListener(new TextWatcher() {
@@ -70,7 +72,7 @@ public class TasksAdd extends BottomSheetDialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().equals("")){
                     saveBtn.setEnabled(false);
-                    saveBtn.setBackgroundColor(Color.GRAY);
+                    saveBtn.setBackgroundColor(Color.DKGRAY);
                 }else{
                     saveBtn.setEnabled(true);
                     saveBtn.setBackgroundColor(getResources().getColor(R.color.purple_500));
@@ -84,26 +86,58 @@ public class TasksAdd extends BottomSheetDialogFragment {
             }
         });
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String task = tasksEdt.getText().toString();
+        saveBtn.setOnClickListener(v -> {
+            String task = tasksEdt.getText().toString();
 
-                if (task.isEmpty()){
-                    Toast.makeText(context,"Empty task not allowed !!!", Toast.LENGTH_LONG).show();
-                }else{
+            if (task.isEmpty()) {
+                Toast.makeText(context, "Empty task not allowed !!!", Toast.LENGTH_LONG).show();
+            } else {
+                //Date date = new Date();
+                //String year = (String) DateFormat.format("yyyy", date);
+                //String month = (String) DateFormat.format("MM", date);
+                String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
+                String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
 
-                    String UId=auth.getCurrentUser().getUid();
+                Map<String, Integer> taskMap = new HashMap<>();
 
-                    Date date = new Date();
-                    String d = (String) android.text.format.DateFormat.format("dd/MM/yyyy",date);
-                    Map<String , Integer> taskMap = new HashMap<>();
+                taskMap.put(task, status);
 
-                    taskMap.put(task,status);
+                //String UId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
+                //String UId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
+                String UId = currentU.getUid();
 
-                }
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference mData = database.getReference("User");
+                DatabaseReference mData1 = mData.child(UId);
+                DatabaseReference mData2 = mData1.child(year);
+                DatabaseReference mData3 = mData2.child(month+1);
+
+                mData3.child("Task").setValue(taskMap
+                        , (OnCompleteListener<DocumentReference>) task1 -> {
+                    if (task1.isSuccessful()) {
+                        Toast.makeText(context, "Task Saved", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, Objects.requireNonNull(task1.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
             }
+        dismiss();
         });
+    }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        Activity activity = getActivity();
+        if (activity instanceof  OnDialogCloseListner){
+            ((OnDialogCloseListner)activity).onDialogClose(dialog);
+        }
     }
 }

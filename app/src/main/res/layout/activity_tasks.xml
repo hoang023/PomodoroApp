@@ -38,14 +38,16 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addBtn"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="160dp"
-            android:layout_marginBottom="0dp"
+            android:layout_marginBottom="4dp"
             android:backgroundTint="#C1A1E9"
-            android:src="@drawable/add_task_button" />
+            android:src="@drawable/add_task_button"
+            app:maxImageSize="55dp"
+            app:fabCustomSize="55dp"/>
     </RelativeLayout>
 
     <TableLayout
