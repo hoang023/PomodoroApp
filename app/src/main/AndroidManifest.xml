@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StatisticalActivity" />
+        <activity android:name=".Statistical.StatisticalActivity" />
         <activity android:name=".SetTimeFunctions.SettimeActivity"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".TasksFunctions.TasksActivity"></activity>

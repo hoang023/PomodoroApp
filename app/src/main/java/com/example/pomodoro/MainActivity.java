@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pomodoro.SetTimeFunctions.SettimeActivity;
+import com.example.pomodoro.Statistical.StatisticalActivity;
 import com.example.pomodoro.TasksFunctions.TasksActivity;
 
 import java.util.Locale;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(MainActivity.this,StatisticalActivity.class);
+                Intent intent =new Intent(MainActivity.this, StatisticalActivity.class);
                 startActivity(intent);
             }
         });
