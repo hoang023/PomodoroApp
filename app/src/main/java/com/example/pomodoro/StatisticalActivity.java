@@ -1,4 +1,4 @@
-package com.example.pomodoro.Statistical;
+package com.example.pomodoro;
 
 import android.os.Bundle;
 import android.view.View;
