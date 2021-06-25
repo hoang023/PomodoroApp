@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pomodoro">
 
     <application
@@ -9,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pomodoro">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,9 +18,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".StatisticalActivity" />
+        <activity android:name=".MainActivity"/>
         <activity android:name=".SetTimeFunctions.SettimeActivity"
             android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".TasksFunctions.TasksActivity"></activity>
+        <activity android:name=".TasksFunctions.TasksActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>
