@@ -100,9 +100,10 @@ public class TasksAdd extends BottomSheetDialogFragment {
                 String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
                 String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
 
-                Map<String, Integer> taskMap = new HashMap<>();
+                Map<String, Object> taskMap = new HashMap<>();
 
-                taskMap.put(task, status);
+                taskMap.put("Content",task);
+                taskMap.put("Status",0);
 
                 FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
                 String UId = currentU.getUid();

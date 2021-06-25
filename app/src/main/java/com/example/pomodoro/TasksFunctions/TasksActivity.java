@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,12 +15,28 @@ import com.example.pomodoro.R;
 import com.example.pomodoro.SetTimeFunctions.SettimeActivity;
 import com.example.pomodoro.StatisticalActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class TasksActivity extends AppCompatActivity {
 
     private Button set, detail;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
+    private DataAdapter adapter;
+    private List<Data> mList;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +71,49 @@ public class TasksActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TasksAdd.newInstance().show(getSupportFragmentManager(), TasksAdd.TAG);
+            }
+        });
+
+        mList = new ArrayList<>();
+        adapter = new DataAdapter(TasksActivity.this, mList);
+
+        recyclerView.setAdapter(adapter);
+    }
+
+        private void showData(){
+        FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference mData = database.getReference("Users");
+        String UId = currentU.getUid();
+        String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
+        String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
+
+        mData.child(UId).child(year).child(month).child("Task").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Data data = snapshot.getValue(Data.class);
+                mList.add(data);
+                adapter.notifyDataSetChanged();
+            }
+
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
