@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pomodoro.SignIn.SignInActivity;
-
 public class SplashActivity extends AppCompatActivity {
 
     TextView loadTxt, madeTxt;
