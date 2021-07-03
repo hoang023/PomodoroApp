@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +22,7 @@ import com.example.pomodoro.TasksFunctions.TasksActivity;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private static final long startTime = 60000;
+    private static final long startTime = 1*60000; //1p
     private Button play;
     private ViewGroup pause;
     private Button skipb;
@@ -38,12 +39,16 @@ public class MainActivity extends AppCompatActivity {
     private Button set;
     private Button tasks;
 
+    private ProgressBar progressBarCircle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SetupUIView();
+
+        //Play
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     pause.startAnimation(animation);
                     Animation animation1 = AnimationUtils.loadAnimation(MainActivity.this, R.anim.lefttoright);
                     countdownStop.startAnimation(animation1);
+                    setProgressBarValues();
                     startTimer();
                 }
                 else {
@@ -63,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        //Chuyển màn hình detail
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Chuyển màn hình settime
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Chuyển màn hình task
         tasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Skip
         skipb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,13 +102,14 @@ public class MainActivity extends AppCompatActivity {
                 countdownStop.setVisibility(View.GONE);
                 countdownButton.setImageResource(R.drawable.pause);
                 timeLeftInMilliseconds = 0;
+                setProgressBarValues();
                 updateTimer();
                 if(timerRunning) {
                     countDownTimer.cancel();
                 }
             }
         });
-
+        //Pause and Start time
         countdownButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        //Reset time
         countdownStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void resetTimer() {
         timeLeftInMilliseconds = startTime;
+        setProgressBarValues();
         updateTimer();
         pauseTimer();
-
     }
 
     private void startTimer() {
@@ -131,11 +143,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTick(long millsUntilFinished) {
                 timeLeftInMilliseconds = millsUntilFinished;
+                progressBarCircle.setProgress((int) (millsUntilFinished / 1000));
                 updateTimer();
             }
             @Override
             public void onFinish() {
                 countdownText.setText("00:00");
+                setProgressBarValues();
                 timerRunning = false;
                 countdownButton.setImageResource(R.drawable.playbutton);
             }
@@ -152,8 +166,6 @@ public class MainActivity extends AppCompatActivity {
     private void updateTimer() {
         int minutes = (int) (timeLeftInMilliseconds / 1000) / 60;
         int seconds = (int) (timeLeftInMilliseconds / 1000) % 60;
-
-
         String timeLefText = String.format(Locale.getDefault(), "%02d:%02d", minutes , seconds);
         countdownText.setText(timeLefText);
     }
@@ -169,6 +181,12 @@ public class MainActivity extends AppCompatActivity {
         detail = (Button) findViewById(R.id.detailtbutton );
         set = (Button) findViewById(R.id.setbutton);
         tasks = (Button) findViewById(R.id.tasksbutton);
+        progressBarCircle = (ProgressBar) findViewById(R.id.bg2);
 
+    }
+    private void setProgressBarValues() {
+
+        progressBarCircle.setMax((int) timeLeftInMilliseconds / 1000);
+        progressBarCircle.setProgress((int) timeLeftInMilliseconds / 1000);
     }
 }
