@@ -38,8 +38,6 @@ public class TasksActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private DataAdapter adapter;
-    private List<Data> mList;
-    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,32 +75,8 @@ public class TasksActivity extends AppCompatActivity {
             }
         });
 
-        mList = new ArrayList<>();
-        adapter = new DataAdapter(TasksActivity.this, mList);
-
         recyclerView.setAdapter(adapter);
-    }
 
-        private void showData(){
-        FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference mData = database.getReference("Users");
-        String UId = currentU.getUid();
-        String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
-        String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
-
-        mData.child(UId).child(year).child(month).child("Task").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Data data = dataSnapshot.getValue(Data.class);
-                    mList.add(data);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
+        //showData();
     }
 }

@@ -2,33 +2,31 @@ package com.example.pomodoro.TasksFunctions;
 
 public class Data extends  TaskId{
 
-    public String task;
-    private String month;
-    private String year;
-    public int status;
+    private String Content;
+    private int Status;
 
     public Data() {
         // mặc định khi nhận data từ firebase
     }
 
-    public Data(String Task, int Status) {
-        task = Task;
-        status = Status;
+    public Data(String content, int status) {
+        Content = content;
+        Status = status;
     }
 
-    public String getTask() {
-        return task;
+    public String getContent() {
+        return Content;
     }
 
-    public String getMonth() {
-        return month;
-    }
-
-    public String getYear() {
-        return year;
+    public void setContent(String content) {
+        Content = content;
     }
 
     public int getStatus() {
-        return status;
+        return Status;
+    }
+
+    public void setStatus(int status) {
+        Status = status;
     }
 }

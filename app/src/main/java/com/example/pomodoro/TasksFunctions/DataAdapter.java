@@ -1,5 +1,6 @@
 package com.example.pomodoro.TasksFunctions;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,24 +18,46 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> {
 
+//    private Context mContext;
+//    private DataAdapter mDataAdapter;
+//    public void setConfig(RecyclerView recyclerView, Context context, List<Data> data, List<String> keys){
+//        mContext = context;
+//        mDataAdapter = new DataAdapter(data,keys);
+//    }
+
     private List<Data> todoList;
+    private List<String> keys;
     private TasksActivity activity;
     private FirebaseDatabase database;
+    private DatabaseReference mData;
+    private FirebaseUser currentU;
+    private String year,month,UId;
+    private String key;
 
-    public DataAdapter(TasksActivity mainActivity, List<Data> todoList){
+    public DataAdapter(TasksActivity mainActivity, List<Data> todoList, List<String> keys){
         this.todoList = todoList;
+        this.keys = keys;
         activity = mainActivity;
+        currentU = FirebaseAuth.getInstance().getCurrentUser();
+        UId = currentU.getUid();
+        year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
+        month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
+        database = FirebaseDatabase.getInstance();
+        mData = database.getReference("User").child(UId).child(year).child(month)
+                .child("Task").child(key).child("Status");
     }
     // Set layout cho từng listitem
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activity).inflate(R.layout.item_tasks, parent, false);
-        database = FirebaseDatabase.getInstance();
 
         return new MyViewHolder(view);
     }
@@ -43,31 +66,23 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull DataAdapter.MyViewHolder holder, int position) {
 
         Data data = todoList.get(position);
-        holder.checkBox.setText(data.getTask());
+        key = keys.get(position);
+        holder.checkBox.setText(data.getContent());
         holder.checkBox.setChecked(toBoolean(data.getStatus()));
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                DatabaseReference mData = database.getReference("User");
-                FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
-                String UId = currentU.getUid();
-                DatabaseReference mData1 = mData.child(UId);
-                DatabaseReference mData2 = mData1.child(data.getYear());
-                DatabaseReference mData3 = mData2.child(data.getMonth());
-                DatabaseReference mData4 = mData3.child("Task");
-                DatabaseReference mData5 = mData4.child(data.TaskId);
-                DatabaseReference mData6 = mData5.child("Status");
 
                 if (isChecked){
-                    mData6.setValue(1);
-
+                    mData.setValue(1);
                 }else{
-                    mData6.setValue(0);
+                    mData.setValue(0);
                 }
             }
         });
     }
+
     // Hàm chuyển sang kiểu số cho status: 0 là CHT & 1 là HT
     private boolean toBoolean(int status){
         return status != 0;
@@ -77,7 +92,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> 
     public int getItemCount() {
         return todoList.size();
     }
-    // Ánh xạ checkbox
+
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         CheckBox checkBox;
@@ -86,7 +101,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> 
             super(itemView);
 
             checkBox = itemView.findViewById(R.id.checkBox);
-
         }
     }
 }

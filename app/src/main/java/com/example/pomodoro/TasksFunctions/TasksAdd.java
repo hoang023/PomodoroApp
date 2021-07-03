@@ -47,7 +47,6 @@ public class TasksAdd extends BottomSheetDialogFragment {
     private Button saveBtn;
     private FirebaseAuth auth;
     private Context context;
-    private final Integer status = 0;
 
     public static TasksAdd newInstance() {
         return new TasksAdd();
@@ -82,7 +81,6 @@ public class TasksAdd extends BottomSheetDialogFragment {
                     saveBtn.setEnabled(true);
                     saveBtn.setBackgroundColor(getResources().getColor(R.color.purple_500));
                 }
-
             }
 
             @Override
@@ -109,12 +107,12 @@ public class TasksAdd extends BottomSheetDialogFragment {
                 String UId = currentU.getUid();
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference mData = database.getReference("User");
-                DatabaseReference mData1 = mData.child(UId);
-                DatabaseReference mData2 = mData1.child(year);
-                DatabaseReference mData3 = mData2.child(month);
+                DatabaseReference mData = database.getReference("User").child(UId)
+                        .child(year).child(month).child("Task");
 
-                mData3.child("Task").push().setValue(taskMap, new DatabaseReference.CompletionListener() {
+                String key = mData.push().getKey();
+
+                mData.child(key).setValue(taskMap, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                         if (error == null) {
