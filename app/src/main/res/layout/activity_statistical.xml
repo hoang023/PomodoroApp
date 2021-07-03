@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F6F6F6">
 
-    <TextView
-        android:background="@drawable/background_statistical"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="60dp"
-        android:id="@+id/staticLayout" />
     <Button
         android:id="@+id/logoutbutton"
         android:layout_width="57dp"
@@ -21,96 +16,65 @@
         android:layout_marginRight="3dp"
         android:layout_marginTop="5dp"/>
 
-    <TableLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_statistic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/staticLayout"
-        android:layout_margin="15dp"
-        android:background="@color/white"
-        android:stretchColumns="*"
-        android:shrinkColumns="*">
-        <ImageView
-            android:background="@drawable/chart"
-            android:layout_height="220dp"
-            android:layout_width="330dp"
-            android:layout_marginBottom="12dp" />
+        android:layout_height="378dp"
+        android:layout_above="@+id/layout1"
+        android:layout_below="@+id/logoutbutton"
+        android:layout_marginTop="39dp"
+        android:layout_marginBottom="53dp"
+        android:background="@drawable/background_statistical">
 
-        <TableRow
-            android:id="@+id/report"
-            android:layout_height="120dp"
-            android:layout_width="wrap_content">
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="421dp"
+            android:layout_height="279dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"></com.github.mikephil.charting.charts.LineChart>
 
         <TextView
-            android:id="@+id/goal_tv"
-            android:layout_width="160dp"
+            android:id="@+id/txt_goal"
+            android:layout_width="180dp"
             android:layout_height="70dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/goal_zone" />
+            android:layout_marginStart="4dp"
+            android:background="@drawable/goal_zone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txt_performance"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lineChart"
+            app:layout_constraintVertical_bias="0.5"
+            tools:ignore="MissingConstraints"
+            ></TextView>
 
         <TextView
-                android:id="@+id/performance_tv"
-                android:layout_width="160dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/performancce_zone">
-            </TextView>
-        </TableRow>
-    </TableLayout>
+            android:id="@+id/txt_performance"
+            android:layout_width="180dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/performancce_zone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@id/txt_goal"
+            app:layout_constraintTop_toBottomOf="@+id/lineChart"
+            app:layout_constraintVertical_bias="0.5"
+            tools:ignore="MissingConstraints"></TextView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/staticLayout"
-        android:layout_alignBottom="@+id/staticLayout"
-        android:layout_marginLeft="80dp"
-        android:layout_marginBottom="55dp"
-        android:text="12.5H/6Ps"
-        android:textSize="18dp"
-        android:textColor="#AD0FB1"
-        android:id="@+id/time_goals"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/staticLayout"
-        android:layout_alignBottom="@+id/staticLayout"
-        android:layout_marginLeft="80dp"
-        android:layout_marginBottom="23dp"
-        android:text="12.5H/6Ps"
-        android:textSize="18dp"
-        android:textColor="#B20FB6"
-        android:id="@+id/task_goals"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/staticLayout"
-        android:layout_alignBottom="@+id/staticLayout"
-        android:layout_marginLeft="260dp"
-        android:layout_marginBottom="55dp"
-        android:text="+20% fcs"
-        android:textSize="18dp"
-        android:textColor="#B20FB6"
-        android:id="@+id/focus_percent"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/staticLayout"
-        android:layout_alignBottom="@+id/staticLayout"
-        android:layout_marginLeft="260dp"
-        android:layout_marginBottom="23dp"
-        android:text="-15% tks"
-        android:textSize="18dp"
-        android:textColor="#B20FB6"
-        android:id="@+id/task_percent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TableLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/layout2"
-        android:stretchColumns="*"
         android:shrinkColumns="*"
-        android:layout_marginTop="5dp">
+        android:stretchColumns="*">
 
         <TableRow android:layout_height="120dp">
 
@@ -163,7 +127,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="6dp"
-                android:background="@drawable/detail" />
+                android:background="@drawable/statistic_return" />
         </TableRow>
     </TableLayout>
 </RelativeLayout>
