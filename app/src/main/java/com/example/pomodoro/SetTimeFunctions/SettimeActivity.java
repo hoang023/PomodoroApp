@@ -90,9 +90,7 @@ public class SettimeActivity extends AppCompatActivity{
                 {
                     Status status = new Status(tx_focus.getText().toString(),tx_break.getText().toString(),tx_stages.getText().toString());
                     mref.child("User").child(UId).child("SetTime").setValue(status);
-                    tx_focus.setText("0");
-                    tx_break.setText("0");
-                    tx_stages.setText("0");
+
                     Toast.makeText(SettimeActivity.this,"Save successfully", Toast.LENGTH_SHORT).show();
                 }
 
