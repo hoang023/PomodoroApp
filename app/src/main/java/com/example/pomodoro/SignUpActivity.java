@@ -3,6 +3,7 @@ package com.example.pomodoro;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,10 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pomodoro.SetTimeFunctions.Status;
+import com.github.mikephil.charting.renderer.DataRenderer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -57,9 +63,17 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
+                    String UId = currentU.getUid();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+//                    DatabaseReference aaa = database.getReference().child("User").child(UId).child("SetTime").setValue(status);
                     Toast.makeText(getApplicationContext(), "Account successfully created", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
                     startActivity(intent);
+                    DatabaseReference databaseReference = database.getReference().child("User").child(UId).child("SetTime");
+                     Status status = new Status("0","0","0");
+                    databaseReference.setValue(status);
                 } else {
                     Toast.makeText(getApplicationContext(), "Account failed created", Toast.LENGTH_SHORT).show();
                 }
