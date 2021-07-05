@@ -41,7 +41,6 @@ public class RecyclerView_Config {
         private DatabaseReference mData;
         private FirebaseUser currentU;
         private String year,month,UId;
-        private String key;
 
         public DataAdapter (List<Data> todoList, List<String> keys){
             this.todoList = todoList;
