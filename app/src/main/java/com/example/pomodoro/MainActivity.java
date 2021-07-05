@@ -33,9 +33,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements ValueEventListener {
-    private static final String TAG = "MyActivity";
-    private static final long startTime = 0*60000; //1p
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MyActivity1";
+    private static final long startTime = 1*60000; //1p
     private Button play;
     private ViewGroup pause;
     private Button skipb;
@@ -47,17 +47,23 @@ public class MainActivity extends AppCompatActivity implements ValueEventListene
     private CountDownTimer countDownTimer;
     private long timeLeftInMilliseconds = startTime;
     private boolean timerRunning ;
+    private TextView stage;
+    private TextView tx_status;
 
-    private Button detail;
+    private ImageView detail;
     private Button set;
     private Button tasks;
 
     private ProgressBar progressBarCircle;
-
+    int focusTime;
+    int breakTime;
+    int stageNumber;
+    int index=0;
     FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
     String UId = currentU.getUid();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference mref = database.getReference().child("User").child(UId).child("SetTime");
+    DatabaseReference mref = database.getReference().child("User").child(UId);
+    DatabaseReference datamref = mref.child("SetTime");
 
 
     @Override
@@ -65,99 +71,135 @@ public class MainActivity extends AppCompatActivity implements ValueEventListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SetupUIView();
-
-        //Data
-        mref.addValueEventListener(this);
-
-
-        //Play
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(timeLeftInMilliseconds !=0) {
-                    TransitionManager.beginDelayedTransition(transitionsContainer);
-                    play.setVisibility(View.GONE);
-                    pause.setVisibility(View.VISIBLE);
-                    countdownStop.setVisibility(View.VISIBLE);
-                    Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.righttoleft);
-                    pause.startAnimation(animation);
-                    Animation animation1 = AnimationUtils.loadAnimation(MainActivity.this, R.anim.lefttoright);
-                    countdownStop.startAnimation(animation1);
-                    setProgressBarValues();
-                    startTimer();
-                }
-                else {
-                    Toast.makeText(MainActivity.this,"you have to set the time",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        //Chuyển màn hình detail
-        detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(MainActivity.this, StatisticalActivity.class);
-                startActivity(intent);
-            }
-        });
-        //Chuyển màn hình settime
-        set.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(MainActivity.this, SettimeActivity.class);
-                startActivity(intent);
-            }
-        });
-        //Chuyển màn hình task
-        tasks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               Intent intent =new Intent(MainActivity.this, TasksActivity.class);
-                startActivity(intent);
-            }
-        });
-        //Skip
-        skipb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                play.setVisibility(View.VISIBLE);
-                pause.setVisibility(View.GONE);
-                countdownStop.setVisibility(View.GONE);
-                countdownButton.setImageResource(R.drawable.pause);
-                timeLeftInMilliseconds = 0;
-                setProgressBarValues();
-                updateTimer();
-                if(timerRunning) {
-                    countDownTimer.cancel();
-                }
-            }
-        });
-        //Pause and Start time
-        countdownButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(timerRunning){
-                    pauseTimer();
-                }
-                else{
-                    startTimer();
-                }
-            }
-        });
-        //Reset time
-        countdownStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetTimer();
-            }
-        });
-        updateTimer();
-    }
-
-    private void resetTimer() {
-        timeLeftInMilliseconds = startTime;
         setProgressBarValues();
-        updateTimer();
-        pauseTimer();
+        datamref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange( DataSnapshot snapshot) {
+               //Log.d(TAG,snapshot.getValue().toString());
+                Status status = snapshot.getValue(Status.class);
+                focusTime = Integer.parseInt(status.getFocus().toString());
+                breakTime = Integer.parseInt(status.getBreak().toString());
+                stageNumber = Integer.parseInt(status.getStage().toString());
+              // Log.d(TAG,status.getFocus().toString()+" / "+ status.getBreak().toString()+ " / "+ status.getStage().toString());
+                timeLeftInMilliseconds = focusTime * 60000;
+                if(stageNumber!=0)
+                {
+                    stage.setText(index+1  +"/"+stageNumber);
+                }
+                else
+                {
+                    stage.setText(0+"/"+stageNumber);
+                }
+
+                //Play
+                play.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(timeLeftInMilliseconds !=0) {
+                            TransitionManager.beginDelayedTransition(transitionsContainer);
+                            play.setVisibility(View.GONE);
+                            pause.setVisibility(View.VISIBLE);
+                            countdownStop.setVisibility(View.VISIBLE);
+                            Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.righttoleft);
+                            pause.startAnimation(animation);
+                            Animation animation1 = AnimationUtils.loadAnimation(MainActivity.this, R.anim.lefttoright);
+                            countdownStop.startAnimation(animation1);
+                            setProgressBarValues();
+                            startTimer();
+                        }
+                        else {
+
+                            Toast.makeText(MainActivity.this,"you have to set the time",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                //Chuyển màn hình detail
+                detail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent =new Intent(MainActivity.this, StatisticalActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                //Chuyển màn hình settime
+                set.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent =new Intent(MainActivity.this, SettimeActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                //Chuyển màn hình task
+                tasks.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent =new Intent(MainActivity.this, TasksActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                //Skip
+                skipb.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Status zero = new Status("0","0","0");
+                        mref.setValue(zero);
+                        play.setVisibility(View.VISIBLE);
+                        pause.setVisibility(View.GONE);
+                        countdownStop.setVisibility(View.GONE);
+                        countdownButton.setImageResource(R.drawable.pause);
+                        timeLeftInMilliseconds = 0;
+                        setProgressBarValues();
+                        stage.setText("0/0");
+                        tx_status.setText("Foucus");
+                        updateTimer();
+                        if(timerRunning) {
+                            countDownTimer.cancel();
+                        }
+                    }
+                });
+                //Pause and Start time
+                countdownButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(timerRunning){
+                            pauseTimer();
+                        }
+                        else{
+                            startTimer();
+                        }
+                    }
+                });
+                //Reset time
+                countdownStop.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        resetTimer();
+                    }
+                });
+                updateTimer();
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+    }
+    private void resetTimer() {
+        if(tx_status.getText().toString().equals("Focus"))
+        {
+            timeLeftInMilliseconds = focusTime * 60000;
+            setProgressBarValues();
+            updateTimer();
+            pauseTimer();
+        }
+        else
+        {
+            timeLeftInMilliseconds = breakTime*60000;
+            setProgressBarValues();
+            updateTimer();
+            pauseTimer();
+        }
+
     }
 
     private void startTimer() {
@@ -174,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements ValueEventListene
                 setProgressBarValues();
                 timerRunning = false;
                 countdownButton.setImageResource(R.drawable.playbutton);
+                TimeRun();
             }
         }.start();
         timerRunning = true;
@@ -200,27 +243,62 @@ public class MainActivity extends AppCompatActivity implements ValueEventListene
         skipb = (Button) findViewById(R.id.skipbutton);
         countdownText = (TextView) findViewById(R.id.time);
         countdownStop = findViewById(R.id.stop);
-        detail = (Button) findViewById(R.id.detailtbutton );
+        detail = (ImageView) findViewById(R.id.detailtbutton );
         set = (Button) findViewById(R.id.setbutton);
         tasks = (Button) findViewById(R.id.tasksbutton);
         progressBarCircle = (ProgressBar) findViewById(R.id.bg2);
+        stage = (TextView) findViewById(R.id.stage);
+        tx_status =(TextView) findViewById(R.id.status);
 
     }
     private void setProgressBarValues() {
+        if(timeLeftInMilliseconds!=0)
+        {
+            progressBarCircle.setMax((int) timeLeftInMilliseconds / 1000);
+            progressBarCircle.setProgress((int) timeLeftInMilliseconds / 1000);
+        }
+        else
+        {
+            progressBarCircle.setMax((int) 1000 / 1000);
+            progressBarCircle.setProgress((int) 1000 / 1000);
+        }
 
-        progressBarCircle.setMax((int) timeLeftInMilliseconds / 1000);
-        progressBarCircle.setProgress((int) timeLeftInMilliseconds / 1000);
+
     }
-
-
-    @Override
-    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-        Status status = snapshot.getValue(Status.class);
-        Log.d(TAG, status.getFocus().toString());
-    }
-
-    @Override
-    public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
+    private  void TimeRun(){
+        Log.d(TAG,"long 3 "+focusTime+" / "+ breakTime+ " / "+ stageNumber);
+        if(tx_status.getText().toString().equals("Focus")) {
+            tx_status.setText("Break");
+            timeLeftInMilliseconds =breakTime *60000;
+            updateTimer();
+            setProgressBarValues();
+            }
+        else {
+           if(index < stageNumber-1){
+               index++;
+               stage.setText(index+1 +"/"+stageNumber);
+               tx_status.setText("Focus");
+               timeLeftInMilliseconds =focusTime *60000;
+               updateTimer();
+               setProgressBarValues();
+           }
+           else {
+               index=0;
+               stage.setText(index +"/0");
+               tx_status.setText("Focus");
+                play.setVisibility(View.VISIBLE);
+                pause.setVisibility(View.GONE);
+                countdownStop.setVisibility(View.GONE);
+                countdownButton.setImageResource(R.drawable.pause);
+                timeLeftInMilliseconds = 0;
+                setProgressBarValues();
+                updateTimer();
+                if(timerRunning) {
+                    countDownTimer.cancel();
+               }
+               Status status0 = new Status("0","0","0");
+               mref.setValue(status0);
+           }
+        }
     }
 }

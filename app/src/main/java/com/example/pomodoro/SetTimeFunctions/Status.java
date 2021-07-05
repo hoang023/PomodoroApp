@@ -2,16 +2,16 @@ package com.example.pomodoro.SetTimeFunctions;
 
 public class Status {
 
-    String Focus;
-    String Break;
-    String Stage;
+    public static String Focus;
+    public static String  Break;
+    public static String  Stage;
 
     public Status(){}
 
     public Status(String Focus, String Break, String Stage){
-        this.Focus =Focus;
-        this.Break =Break;
-        this.Stage =Stage;
+        this.Focus = Focus;
+        this.Break = Break;
+        this.Stage = Stage;
     }
 
     public String getFocus() {
@@ -27,7 +27,7 @@ public class Status {
     }
 
     public void setBreak(String aBreak) {
-        Break = aBreak;
+        Break = aBreak ;
     }
 
     public String getStage() {
