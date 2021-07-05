@@ -22,7 +22,7 @@ public class FirebaseDatabaseHelper {
 
     private FirebaseDatabase database;
     private DatabaseReference mData;
-    private  FirebaseUser currentU;
+    private FirebaseUser currentU;
     private String UId, year, month;
     private List<Data> mList = new ArrayList<>();
 
@@ -35,16 +35,16 @@ public class FirebaseDatabaseHelper {
 
     public FirebaseDatabaseHelper() {
         database = FirebaseDatabase.getInstance();
-        mData = database.getReference("User");
         currentU = FirebaseAuth.getInstance().getCurrentUser();
         UId = currentU.getUid();
         year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
         month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
+        mData = database.getReference("User").child(UId).child(year).child(month).child("Task");
     }
 
 
-    private void showData(final DataStatus dataStatus) {
-        mData.child(UId).child(year).child(month).child("Task").addValueEventListener(new ValueEventListener() {
+    public void showData(final DataStatus dataStatus) {
+        mData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 mList.clear();

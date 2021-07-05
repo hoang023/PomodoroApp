@@ -15,29 +15,17 @@ import com.example.pomodoro.R;
 import com.example.pomodoro.SetTimeFunctions.SettimeActivity;
 import com.example.pomodoro.StatisticalActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class TasksActivity extends AppCompatActivity {
 
     private Button set, detail;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
-    private DataAdapter adapter;
+    private RecyclerView_Config adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,8 +63,38 @@ public class TasksActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull @NotNull RecyclerView recyclerView, int dx, int dy) {
+                if (dy>0){
+                    fab.hide();
+                } else {
+                    fab.show();
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
 
-        //showData();
+        new FirebaseDatabaseHelper().showData(new FirebaseDatabaseHelper.DataStatus() {
+            @Override
+            public void DataIsLoaded(List<Data> mList, List<String> keys) {
+                new RecyclerView_Config().setConfig(recyclerView, TasksActivity.this, mList, keys);
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
     }
 }
