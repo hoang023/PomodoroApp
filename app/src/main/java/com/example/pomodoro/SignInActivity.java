@@ -14,13 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
 public class SignInActivity extends AppCompatActivity {
-    private EditText edtemail, edtpassword;
+    private EditText edtemail;
+    private TextInputEditText edtpassword;
     private Button btnsignin,btnsignup;
     private FirebaseAuth mAuth;
 

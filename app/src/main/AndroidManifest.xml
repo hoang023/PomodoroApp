@@ -19,12 +19,14 @@
         </activity>
         <activity android:name=".SignInActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".StatisticalActivity" />
+        <activity android:name=".Statistical.StatisticalActivity" />
         <activity android:name=".MainActivity"/>
-        <activity android:name=".SetTimeFunctions.SettimeActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".TasksFunctions.TasksActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".SetTimeFunctions.SettimeActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".TasksFunctions.TasksActivity"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

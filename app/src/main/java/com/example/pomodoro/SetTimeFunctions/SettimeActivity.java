@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pomodoro.MainActivity;
 import com.example.pomodoro.R;
-import com.example.pomodoro.StatisticalActivity;
+import com.example.pomodoro.Statistical.StatisticalActivity;
 import com.example.pomodoro.TasksFunctions.TasksActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

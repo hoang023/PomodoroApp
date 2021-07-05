@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pomodoro.R;
 import com.example.pomodoro.SetTimeFunctions.SettimeActivity;
-import com.example.pomodoro.StatisticalActivity;
+import com.example.pomodoro.Statistical.StatisticalActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class TasksActivity extends AppCompatActivity {

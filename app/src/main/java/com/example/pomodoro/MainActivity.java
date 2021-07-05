@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pomodoro.SetTimeFunctions.SettimeActivity;
+import com.example.pomodoro.Statistical.StatisticalActivity;
 import com.example.pomodoro.TasksFunctions.TasksActivity;
 
 import java.util.Locale;
