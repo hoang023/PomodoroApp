@@ -46,6 +46,13 @@ public class RecyclerView_Config {
         public DataAdapter (List<Data> todoList, List<String> keys){
             this.todoList = todoList;
             this.keys = keys;
+
+            currentU =FirebaseAuth.getInstance().getCurrentUser();
+            UId =currentU.getUid();
+            year = new SimpleDateFormat("yyyy",Locale.getDefault()).format(new Date());
+            month = new SimpleDateFormat("MMM",Locale.getDefault()).format(new Date());
+            database =FirebaseDatabase.getInstance();
+            mData = database.getReference("User").child(UId).child(year).child(month).child("Task");
         }
 
         // Set layout cho từng listitem
@@ -61,21 +68,13 @@ public class RecyclerView_Config {
 
             holder.bind(todoList.get(position), keys.get(position));
 
-            currentU =FirebaseAuth.getInstance().getCurrentUser();
-            UId =currentU.getUid();
-            year = new SimpleDateFormat("yyyy",Locale.getDefault()).format(new Date());
-            month = new SimpleDateFormat("MMM",Locale.getDefault()).format(new Date());
-            database =FirebaseDatabase.getInstance();
-            mData = database.getReference("User").child(UId).child(year).child(month)
-                    .child("Task").child(keys.get(position)).child("Status");
-
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        mData.setValue(1);
+                        mData.child(keys.get(position)).child("Status").setValue(1);
                     } else {
-                        mData.setValue(0);
+                        mData.child(keys.get(position)).child("Status").setValue(0);
                     }
                 }
             });

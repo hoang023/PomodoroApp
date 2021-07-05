@@ -29,12 +29,12 @@
         android:background="#C1A1E9"
         android:orientation="vertical">
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/addBtn" />
-
+            android:layout_marginBottom="-1dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addBtn"
