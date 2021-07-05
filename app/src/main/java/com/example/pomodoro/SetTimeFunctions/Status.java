@@ -3,8 +3,8 @@ package com.example.pomodoro.SetTimeFunctions;
 public class Status {
 
     public static String Focus;
-    public static String  Break;
-    public static String  Stage;
+    public static String Break;
+    public static String Stage;
 
     public Status(){}
 

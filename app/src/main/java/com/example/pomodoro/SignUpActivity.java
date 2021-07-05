@@ -17,6 +17,7 @@ import com.example.pomodoro.SetTimeFunctions.Status;
 import com.github.mikephil.charting.renderer.DataRenderer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,8 +27,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.jetbrains.annotations.NotNull;
 
 public class SignUpActivity extends AppCompatActivity {
-    private EditText edtemail, edtpassword;
-    private Button btnsignup;
+    private EditText edtemail;
+    private TextInputEditText edtpassword, edtconfirmpassword;
+    private Button btnsignup, btnSigninnow;
     private FirebaseAuth mAuth;
 
     @Override
@@ -37,19 +39,31 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         edtemail = findViewById(R.id.edtEmail);
         edtpassword = findViewById(R.id.edtPassword);
+        edtconfirmpassword = findViewById(R.id.edtConfirmPassword);
         btnsignup = findViewById(R.id.signup_btn);
+        btnSigninnow = findViewById(R.id.signin_now_btn);
         btnsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup();
             }
         });
+
+        btnSigninnow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void signup() {
-        String email, password;
+        String email, password, confirmpassword;
         email= edtemail.getText().toString();
         password = edtpassword.getText().toString();
+        confirmpassword = edtconfirmpassword.getText().toString();
+
 
         if(TextUtils.isEmpty(email)){
             Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show();
@@ -57,6 +71,11 @@ public class SignUpActivity extends AppCompatActivity {
         }
         if(TextUtils.isEmpty(password)){
             Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!TextUtils.equals(password,confirmpassword)){
+            Toast.makeText(this,"Passwords don't macth", Toast.LENGTH_SHORT).show();
             return;
         }
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

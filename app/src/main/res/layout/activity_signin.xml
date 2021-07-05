@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FCF2FF">
     <ImageView
         android:layout_width="410dp"
@@ -28,18 +29,24 @@
             android:paddingStart="15dp">
 
         </EditText>
-        <EditText
-            android:id="@+id/edtPassword"
-            android:layout_height="57dp"
-            android:background="@drawable/background_login"
+
+        <com.google.android.material.textfield.TextInputLayout
+            app:passwordToggleEnabled="true"
+            app:hintEnabled="false"
             android:layout_marginTop="15dp"
-            android:hint="Password"
-            android:textSize="21sp"
             android:layout_marginHorizontal="20dp"
-            android:gravity="center_vertical"
-            android:paddingStart="15dp"
-            android:inputType="textPassword">
-        </EditText>
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:textSize="21dp"
+                android:paddingLeft="15dp"
+                android:id="@+id/edtPassword"
+                android:background="@drawable/background_login"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/signin_btn"
