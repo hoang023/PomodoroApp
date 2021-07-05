@@ -29,25 +29,25 @@
         android:background="#C1A1E9"
         android:orientation="vertical">
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/addBtn" />
-
+            android:layout_marginBottom="-1dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="160dp"
-            android:layout_marginBottom="4dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
             android:backgroundTint="#C1A1E9"
             android:src="@drawable/add_task_button"
-            app:maxImageSize="55dp"
-            app:fabCustomSize="55dp"/>
+            app:fabCustomSize="55dp"
+            app:layout_anchorGravity="bottom"
+            app:maxImageSize="55dp" />
     </RelativeLayout>
 
     <TableLayout
