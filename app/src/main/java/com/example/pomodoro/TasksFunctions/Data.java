@@ -1,6 +1,6 @@
 package com.example.pomodoro.TasksFunctions;
 
-public class Data extends  TaskId{
+public class Data {
 
     private String Content;
     private int Status;

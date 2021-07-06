@@ -1,7 +1,10 @@
 package com.example.pomodoro.TasksFunctions;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,7 +45,6 @@ public class FirebaseDatabaseHelper {
         mData = database.getReference("User").child(UId).child(year).child(month).child("Task");
     }
 
-
     public void showData(final DataStatus dataStatus) {
         mData.addValueEventListener(new ValueEventListener() {
             @Override
@@ -62,5 +64,21 @@ public class FirebaseDatabaseHelper {
 
             }
         });
+    }
+
+    public void deleteData(String key, final DataStatus dataStatus){
+        mData = database.getReference("User").child(UId).child(year).child(month)
+                .child("Task").child(key);
+        mData.setValue(null)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+             @Override
+                public void onSuccess(Void unused) {
+                    dataStatus.DataIsDeleted();
+             }
+        });
+    }
+
+    public void editData(int position){
+
     }
 }

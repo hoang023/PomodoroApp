@@ -32,8 +32,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/addBtn" />
+            android:layout_height="match_parent"/>
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

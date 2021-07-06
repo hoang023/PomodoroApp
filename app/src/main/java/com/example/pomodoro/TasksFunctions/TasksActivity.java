@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,13 +26,14 @@ public class TasksActivity extends AppCompatActivity {
     private Button set, detail;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
-    private RecyclerView_Config adapter;
+    private RecyclerView_Config.DataAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
 
+        //Chuyen man hinh qua set time
         set = (Button) findViewById(R.id.setbutton);
         set.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +43,7 @@ public class TasksActivity extends AppCompatActivity {
             }
         });
 
+        //Chuyen man hinh qua detail
         detail = (Button) findViewById(R.id.detailtbutton );
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,12 +53,14 @@ public class TasksActivity extends AppCompatActivity {
             }
         });
 
+        //Anh xa
         recyclerView = findViewById(R.id.recyclerview);
         fab = findViewById(R.id.addBtn);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(TasksActivity.this));
 
+        //Button them task
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +68,7 @@ public class TasksActivity extends AppCompatActivity {
             }
         });
 
+        //Su kien scroll cho floating action button (an/hien)
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull @NotNull RecyclerView recyclerView, int dx, int dy) {
@@ -74,7 +80,10 @@ public class TasksActivity extends AppCompatActivity {
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TouchHelper(adapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
+        //Hien data tu firebase len recyclerview
         new FirebaseDatabaseHelper().showData(new FirebaseDatabaseHelper.DataStatus() {
             @Override
             public void DataIsLoaded(List<Data> mList, List<String> keys) {
