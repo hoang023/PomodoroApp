@@ -1,7 +1,6 @@
 package com.example.pomodoro.TasksFunctions;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,16 +41,11 @@ public class RecyclerView_Config {
         private DatabaseReference mData;
         private FirebaseUser currentU;
         private String year,month,UId;
-        TasksActivity activity;
+        private String key;
 
         public DataAdapter (List<Data> todoList, List<String> keys){
             this.todoList = todoList;
             this.keys = keys;
-            year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
-            month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
-            currentU = FirebaseAuth.getInstance().getCurrentUser();
-            UId = currentU.getUid();
-            database = FirebaseDatabase.getInstance();
         }
 
         // Set layout cho từng listitem
@@ -61,36 +55,19 @@ public class RecyclerView_Config {
             return new MyViewHolder(parent);
         }
 
-        public Context getContext(){return activity;}
-
-        public void deleteData(int position){
-            Data data = todoList.get(position);
-            mData = database.getReference("User").child(UId).child(keys.get(position))
-                    .child(year).child(month).child("Task");
-            mData.setValue(null);
-            todoList.remove(position);
-            notifyItemRemoved(position);
-        }
-
-        public void editData(int position){
-            Data data = todoList.get(position);
-
-            Bundle bundle = new Bundle();
-            bundle.putString("Content", data.getContent());
-
-            TasksAdd addTasks = new TasksAdd();
-            addTasks.setArguments(bundle);
-            addTasks.show(activity.getSupportFragmentManager(), addTasks.getTag());
-        }
-
         // Update cho checkbox và lấy tên task
         @Override
         public void onBindViewHolder(@NonNull RecyclerView_Config.MyViewHolder holder, int position) {
 
             holder.bind(todoList.get(position), keys.get(position));
 
-            mData = database.getReference("User").child(UId).child(keys.get(position))
-                    .child(year).child(month).child("Task").child("Status");
+            currentU =FirebaseAuth.getInstance().getCurrentUser();
+            UId =currentU.getUid();
+            year = new SimpleDateFormat("yyyy",Locale.getDefault()).format(new Date());
+            month = new SimpleDateFormat("MMM",Locale.getDefault()).format(new Date());
+            database =FirebaseDatabase.getInstance();
+            mData = database.getReference("User").child(UId).child(year).child(month)
+                    .child("Task").child(keys.get(position)).child("Status");
 
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
