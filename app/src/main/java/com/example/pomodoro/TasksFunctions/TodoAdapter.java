@@ -52,7 +52,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
     @Override
     public void onBindViewHolder(@NonNull @NotNull TodoAdapter.TodoViewHolder holder, int position) {
         TodoTASK currentTask=tasks.get(position);
-        Log.d("ID",currentTask.getId());
         checkBox=holder.itemView.findViewById(R.id.checkBox);
 
         checkBox.setText(currentTask.getContent());
@@ -65,7 +64,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
 
 
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            Log.d("TASK ID",currentTask.getId());
             dataRef.child(currentTask.getId()).child("Status").setValue(isChecked?1:0).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull @NotNull Task<Void> task) {

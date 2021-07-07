@@ -86,8 +86,7 @@ public class TasksActivity extends AppCompatActivity {
         //Hien data tu firebase len recyclerview
         new FirebaseDatabaseHelper().showData(new FirebaseDatabaseHelper.DataStatus() {
             @Override
-            public void DataIsLoaded(List<TodoTASK> mList, List<String> keys) {
-                //new RecyclerView_Config().setConfig(recyclerView, TasksActivity.this, mList, keys);
+            public void DataIsLoaded(List<TodoTASK> mList) {
                 adapter.setTasks(mList);
             }
 

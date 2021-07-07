@@ -30,7 +30,7 @@ public class FirebaseDatabaseHelper {
     private List<TodoTASK> mList = new ArrayList<>();
 
     public interface DataStatus{
-        void DataIsLoaded(List<TodoTASK> mList, List<String> keys);
+        void DataIsLoaded(List<TodoTASK> mList);
         void DataIsInserted();
         void DataIsUpdated();
         void DataIsDeleted();
@@ -55,10 +55,9 @@ public class FirebaseDatabaseHelper {
                     keys.add(dataSnapshot.getKey());
                     TodoTASK data = dataSnapshot.getValue(TodoTASK.class);
                     data.setId(dataSnapshot.getKey());
-                    Log.d("Data ID",data.getId());
                     mList.add(data);
                 }
-                dataStatus.DataIsLoaded(mList,keys);
+                dataStatus.DataIsLoaded(mList);
             }
 
             @Override
