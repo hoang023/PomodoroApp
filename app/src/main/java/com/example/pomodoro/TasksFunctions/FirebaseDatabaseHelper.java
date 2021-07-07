@@ -68,8 +68,8 @@ public class FirebaseDatabaseHelper {
         });
     }
 
-    public void updateData (String key, Map taskMap, final  DataStatus dataStatus){
-        mData.child(key).setValue(taskMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+    public void updateData (String key, String content, final  DataStatus dataStatus){
+        mData.child(key).child("Content").setValue(content).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 dataStatus.DataIsUpdated();

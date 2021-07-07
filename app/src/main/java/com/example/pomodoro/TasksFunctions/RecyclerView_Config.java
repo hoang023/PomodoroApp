@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -93,8 +94,10 @@ public class RecyclerView_Config {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
+                        holder.checkBox.setPaintFlags(holder.checkBox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         mData.child(keys.get(position)).child("Status").setValue(1);
                     } else {
+                        holder.checkBox.setPaintFlags(holder.checkBox.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                         mData.child(keys.get(position)).child("Status").setValue(0);
                     }
                 }
@@ -148,11 +151,9 @@ public class RecyclerView_Config {
             saveuptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String task = checkBox.getText().toString();
-                    Map<String, Object> taskMap = new HashMap<>();
-                    taskMap.put("Content", task);
+                    String task = updateEdt.getText().toString();
 
-                    new FirebaseDatabaseHelper().updateData(key, taskMap, new FirebaseDatabaseHelper.DataStatus() {
+                    new FirebaseDatabaseHelper().updateData(key, task, new FirebaseDatabaseHelper.DataStatus() {
                         @Override
                         public void DataIsLoaded(List<Data> mList, List<String> keys) {
 
