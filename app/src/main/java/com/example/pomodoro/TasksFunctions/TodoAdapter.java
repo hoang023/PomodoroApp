@@ -105,7 +105,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
 
                     new FirebaseDatabaseHelper().updateData(taskID, content, new FirebaseDatabaseHelper.DataStatus() {
                         @Override
-                        public void DataIsLoaded(List<TodoTASK> mList, List<String> keys) {
+                        public void DataIsLoaded(List<TodoTASK> mList) {
 
                         }
 
@@ -133,7 +133,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
                 public void onClick(View v) {
                     new FirebaseDatabaseHelper().deleteData(taskID, new FirebaseDatabaseHelper.DataStatus() {
                         @Override
-                        public void DataIsLoaded(List<TodoTASK> mList, List<String> keys) {
+                        public void DataIsLoaded(List<TodoTASK> mList) {
 
                         }
 
