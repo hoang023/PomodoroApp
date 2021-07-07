@@ -1,6 +1,7 @@
 package com.example.pomodoro.TasksFunctions;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class FirebaseDatabaseHelper {
 
@@ -66,19 +68,21 @@ public class FirebaseDatabaseHelper {
         });
     }
 
-    public void deleteData(String key, final DataStatus dataStatus){
-        mData = database.getReference("User").child(UId).child(year).child(month)
-                .child("Task").child(key);
-        mData.setValue(null)
-            .addOnSuccessListener(new OnSuccessListener<Void>() {
-             @Override
-                public void onSuccess(Void unused) {
-                    dataStatus.DataIsDeleted();
-             }
+    public void updateData (String key, Map taskMap, final  DataStatus dataStatus){
+        mData.child(key).setValue(taskMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                dataStatus.DataIsUpdated();
+            }
         });
     }
 
-    public void editData(int position){
-
+    public void deleteData(String key, final DataStatus dataStatus){
+        mData.child(key).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                dataStatus.DataIsDeleted();
+            }
+        });
     }
 }

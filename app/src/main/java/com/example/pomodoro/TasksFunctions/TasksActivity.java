@@ -1,9 +1,14 @@
 package com.example.pomodoro.TasksFunctions;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +26,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+
 public class TasksActivity extends AppCompatActivity {
 
     private Button set, detail;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
-    private RecyclerView_Config.DataAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,17 +44,17 @@ public class TasksActivity extends AppCompatActivity {
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(TasksActivity.this, SettimeActivity.class);
+                Intent intent = new Intent(TasksActivity.this, SettimeActivity.class);
                 startActivity(intent);
             }
         });
 
         //Chuyen man hinh qua detail
-        detail = (Button) findViewById(R.id.detailtbutton );
+        detail = (Button) findViewById(R.id.detailtbutton);
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(TasksActivity.this, StatisticalActivity.class);
+                Intent intent = new Intent(TasksActivity.this, StatisticalActivity.class);
                 startActivity(intent);
             }
         });
@@ -72,7 +78,7 @@ public class TasksActivity extends AppCompatActivity {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull @NotNull RecyclerView recyclerView, int dx, int dy) {
-                if (dy>0){
+                if (dy > 0) {
                     fab.hide();
                 } else {
                     fab.show();
@@ -80,8 +86,6 @@ public class TasksActivity extends AppCompatActivity {
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TouchHelper(adapter));
-        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         //Hien data tu firebase len recyclerview
         new FirebaseDatabaseHelper().showData(new FirebaseDatabaseHelper.DataStatus() {
