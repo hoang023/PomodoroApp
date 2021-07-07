@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,13 +106,21 @@ public class TasksAdd extends BottomSheetDialogFragment {
                     taskMap.put("Content", task);
                     taskMap.put("Status", 0);
 
-                    String key = mData.push().getKey();
+                    TodoTASK newTask=new TodoTASK();
+                    newTask.setContent(task);
+                    newTask.setStatus(0);
 
-                    mData.child(key).setValue(taskMap, new DatabaseReference.CompletionListener() {
+                    // thì ngay chỗ này mình push là push một cái object TodoTASK lên luôn k phải 1 cái map
+                    //vì sẽ k lấy data về được
+
+                    newTask.setId(mData.push().getKey());
+
+                    mData.child(newTask.getId()).setValue(taskMap, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                             if (error == null) {
                                 Toast.makeText(context, "Task Saved", Toast.LENGTH_SHORT).show();
+                                Log.d("NEW TASK ID",newTask.getId());
                             } else {
                                 Toast.makeText(context, "Task Not Saved", Toast.LENGTH_SHORT).show();
                             }

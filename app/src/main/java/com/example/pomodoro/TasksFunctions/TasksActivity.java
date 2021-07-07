@@ -1,19 +1,14 @@
 package com.example.pomodoro.TasksFunctions;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,13 +21,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
-
 public class TasksActivity extends AppCompatActivity {
 
     private Button set, detail;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
+    private final TodoAdapter adapter=new TodoAdapter();
+    //private RecyclerView_Config.DataAdapter adapter = new RecyclerView_Config.DataAdapter();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +60,7 @@ public class TasksActivity extends AppCompatActivity {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(TasksActivity.this));
+        recyclerView.setAdapter(adapter);
 
         //Button them task
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +86,9 @@ public class TasksActivity extends AppCompatActivity {
         //Hien data tu firebase len recyclerview
         new FirebaseDatabaseHelper().showData(new FirebaseDatabaseHelper.DataStatus() {
             @Override
-            public void DataIsLoaded(List<Data> mList, List<String> keys) {
-                new RecyclerView_Config().setConfig(recyclerView, TasksActivity.this, mList, keys);
+            public void DataIsLoaded(List<TodoTASK> mList, List<String> keys) {
+                //new RecyclerView_Config().setConfig(recyclerView, TasksActivity.this, mList, keys);
+                adapter.setTasks(mList);
             }
 
             @Override

@@ -1,6 +1,5 @@
 package com.example.pomodoro.TasksFunctions;
 
-import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class FirebaseDatabaseHelper {
 
@@ -29,10 +27,10 @@ public class FirebaseDatabaseHelper {
     private DatabaseReference mData;
     private FirebaseUser currentU;
     private String UId, year, month;
-    private List<Data> mList = new ArrayList<>();
+    private List<TodoTASK> mList = new ArrayList<>();
 
     public interface DataStatus{
-        void DataIsLoaded(List<Data> mList, List<String> keys);
+        void DataIsLoaded(List<TodoTASK> mList, List<String> keys);
         void DataIsInserted();
         void DataIsUpdated();
         void DataIsDeleted();
@@ -55,7 +53,9 @@ public class FirebaseDatabaseHelper {
                 List<String> keys = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     keys.add(dataSnapshot.getKey());
-                    Data data = dataSnapshot.getValue(Data.class);
+                    TodoTASK data = dataSnapshot.getValue(TodoTASK.class);
+                    data.setId(dataSnapshot.getKey());
+                    Log.d("Data ID",data.getId());
                     mList.add(data);
                 }
                 dataStatus.DataIsLoaded(mList,keys);
