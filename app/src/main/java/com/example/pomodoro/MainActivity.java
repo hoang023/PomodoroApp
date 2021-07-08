@@ -2,7 +2,16 @@ package com.example.pomodoro;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationChannelCompat;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Icon;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.transition.TransitionManager;
@@ -32,11 +41,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MyActivity1";
-    private static final long startTime = 1*60000; //1p
+    private static final long startTime = 0*60000; //1p
     private Button play;
     private ViewGroup pause;
     private Button skipb;
@@ -60,11 +71,22 @@ public class MainActivity extends AppCompatActivity {
     int breakTime;
     int stageNumber;
     int index=0;
+    int total;
+    int completed;
+    int totalTime;
+
+    String ContntTitle;
+    StringBuilder _contentText = new StringBuilder("");
+    String ContentText ;
+
     FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
     String UId = currentU.getUid();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mref = database.getReference().child("User").child(UId);
-    DatabaseReference datamref = mref.child("SetTime");
+    DatabaseReference mref_SetTime = mref.child("SetTime");
+    String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
+    String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
+    DatabaseReference mref_Pomo = mref.child(year).child(month).child("Pomodoro");
 
 
     @Override
@@ -73,16 +95,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         SetupUIView();
         setProgressBarValues();
-        datamref.addValueEventListener(new ValueEventListener() {
+        mref_Pomo.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if(snapshot.getValue()==null){
+                    Pomodoro pomodoro = new Pomodoro("0","0","0");
+                    mref_Pomo.setValue(pomodoro);
+                    Log.d(TAG,"aa");
+                }
+                else
+                {
+                    Pomodoro pomodoro = snapshot.getValue(Pomodoro.class);
+                    total = Integer.parseInt(pomodoro.getTotal().toString());
+                    completed = Integer.parseInt(pomodoro.getCompleted().toString());
+                    totalTime = Integer.parseInt(pomodoro.getTotalTime().toString());
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
+        mref_SetTime.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot snapshot) {
-                //Log.d(TAG,snapshot.getValue().toString());
                 Status status = snapshot.getValue(Status.class);
                 focusTime = Integer.parseInt(status.getFocus().toString());
                 breakTime = Integer.parseInt(status.getBreak().toString());
                 stageNumber = Integer.parseInt(status.getStage().toString());
-                // Log.d(TAG,status.getFocus().toString()+" / "+ status.getBreak().toString()+ " / "+ status.getStage().toString());
                 timeLeftInMilliseconds = focusTime * 60000;
+                updateTimer();
                 if(stageNumber!=0)
                 {
                     stage.setText(index+1  +"/"+stageNumber);
@@ -92,98 +136,101 @@ public class MainActivity extends AppCompatActivity {
                     stage.setText(0+"/"+stageNumber);
                 }
 
-                //Play
-                play.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(timeLeftInMilliseconds !=0) {
-                            TransitionManager.beginDelayedTransition(transitionsContainer);
-                            play.setVisibility(View.GONE);
-                            pause.setVisibility(View.VISIBLE);
-                            countdownStop.setVisibility(View.VISIBLE);
-                            Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.righttoleft);
-                            pause.startAnimation(animation);
-                            Animation animation1 = AnimationUtils.loadAnimation(MainActivity.this, R.anim.lefttoright);
-                            countdownStop.startAnimation(animation1);
-                            setProgressBarValues();
-                            startTimer();
-                        }
-                        else {
-
-                            Toast.makeText(MainActivity.this,"you have to set the time",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                //Chuyển màn hình detail
-                detail.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent =new Intent(MainActivity.this, StatisticalActivity.class);
-                        startActivity(intent);
-                    }
-                });
-                //Chuyển màn hình settime
-                set.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent =new Intent(MainActivity.this, SettimeActivity.class);
-                        startActivity(intent);
-                    }
-                });
-                //Chuyển màn hình task
-                tasks.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent =new Intent(MainActivity.this, TasksActivity.class);
-                        startActivity(intent);
-                    }
-                });
-                //Skip
-                skipb.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Status zero = new Status("0","0","0");
-                        mref.setValue(zero);
-                        play.setVisibility(View.VISIBLE);
-                        pause.setVisibility(View.GONE);
-                        countdownStop.setVisibility(View.GONE);
-                        countdownButton.setImageResource(R.drawable.pause);
-                        timeLeftInMilliseconds = 0;
-                        setProgressBarValues();
-                        stage.setText("0/0");
-                        tx_status.setText("Foucus");
-                        updateTimer();
-                        if(timerRunning) {
-                            countDownTimer.cancel();
-                        }
-                    }
-                });
-                //Pause and Start time
-                countdownButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(timerRunning){
-                            pauseTimer();
-                        }
-                        else{
-                            startTimer();
-                        }
-                    }
-                });
-                //Reset time
-                countdownStop.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        resetTimer();
-                    }
-                });
-                updateTimer();
             }
             @Override
             public void onCancelled(DatabaseError error) {
 
             }
         });
+
+
+        //Play
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(timeLeftInMilliseconds !=0) {
+                    TransitionManager.beginDelayedTransition(transitionsContainer);
+                    play.setVisibility(View.GONE);
+                    pause.setVisibility(View.VISIBLE);
+                    countdownStop.setVisibility(View.VISIBLE);
+                    Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.righttoleft);
+                    pause.startAnimation(animation);
+                    Animation animation1 = AnimationUtils.loadAnimation(MainActivity.this, R.anim.lefttoright);
+                    countdownStop.startAnimation(animation1);
+                    setProgressBarValues();
+                    startTimer();
+                    total ++;
+                    mref_Pomo.child("total").setValue(String.valueOf(total));
+                }
+                else {
+                    Toast.makeText(MainActivity.this,"you have to set the time",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        //Chuyển màn hình detail
+        detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity.this, StatisticalActivity.class);
+                startActivity(intent);
+            }
+        });
+        //Chuyển màn hình settime
+        set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity.this, SettimeActivity.class);
+                startActivity(intent);
+            }
+        });
+        //Chuyển màn hình task
+        tasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity.this, TasksActivity.class);
+                startActivity(intent);
+            }
+        });
+        //Skip
+        skipb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                play.setVisibility(View.VISIBLE);
+                pause.setVisibility(View.GONE);
+                countdownStop.setVisibility(View.GONE);
+                countdownButton.setImageResource(R.drawable.pause);
+                timeLeftInMilliseconds = 0;
+                setProgressBarValues();
+                stage.setText("0/0");
+                tx_status.setText("Foucus");
+                updateTimer();
+                if(timerRunning) {
+                    countDownTimer.cancel();
+                }
+                Status zero = new Status("0","0","0");
+                mref_SetTime.setValue(zero);
+            }
+        });
+        //Pause and Start time
+        countdownButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(timerRunning){
+                    pauseTimer();
+                }
+                else{
+                    startTimer();
+                }
+            }
+        });
+        //Reset time
+        countdownStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetTimer();
+            }
+        });
+        updateTimer();
     }
     private void resetTimer() {
         if(tx_status.getText().toString().equals("Focus"))
@@ -267,12 +314,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private  void TimeRun(){
-        Log.d(TAG,"long 3 "+focusTime+" / "+ breakTime+ " / "+ stageNumber);
         if(tx_status.getText().toString().equals("Focus")) {
             tx_status.setText("Break");
             timeLeftInMilliseconds =breakTime *60000;
             updateTimer();
             setProgressBarValues();
+            ContntTitle ="BreakTime";
+            ContentText ="Time for a break!";
+            sendNotificationFocus(ContntTitle,ContentText);
         }
         else {
             if(index < stageNumber-1){
@@ -282,8 +331,14 @@ public class MainActivity extends AppCompatActivity {
                 timeLeftInMilliseconds =focusTime *60000;
                 updateTimer();
                 setProgressBarValues();
+                ContntTitle ="FocusTime";
+                ContentText ="Time to work!";
+                sendNotificationFocus(ContntTitle,ContentText);
             }
             else {
+                ContntTitle ="Congratulations!";
+                ContentText ="You have completed a Pomodoro";
+                sendNotificationFocus(ContntTitle,ContentText);
                 index=0;
                 stage.setText(index +"/0");
                 tx_status.setText("Focus");
@@ -298,8 +353,34 @@ public class MainActivity extends AppCompatActivity {
                     countDownTimer.cancel();
                 }
                 Status status0 = new Status("0","0","0");
-                mref.setValue(status0);
+                mref_SetTime.setValue(status0);
+                completed++;
+                mref_Pomo.child("completed").setValue(String.valueOf(completed));
+                totalTime = focusTime * stageNumber;
+                mref_Pomo.child("totalTime").setValue(String.valueOf(totalTime));
             }
         }
+    }
+
+    private void sendNotificationFocus(String ContntTitle, String ContentText){
+        Uri sound = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.sound_notification);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.applaunch);
+        Notification notification = new NotificationCompat.Builder(this,Channel.CHANNEL_ID)
+                .setContentTitle(ContntTitle)
+                .setContentText(ContentText)
+                .setSmallIcon(R.drawable.applaunch)
+                .setLargeIcon(bitmap)
+                .setSound(sound)
+                .setColor(getResources().getColor(R.color.pink))
+                .setAutoCancel(true)
+                .build();
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if(notificationManager != null)
+        {
+            notificationManager.notify(getNotificationID(),notification);
+        }
+    }
+    private int getNotificationID(){
+        return (int) new Date().getTime();
     }
 }
