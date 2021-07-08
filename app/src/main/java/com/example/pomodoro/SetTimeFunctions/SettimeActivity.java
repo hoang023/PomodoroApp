@@ -1,12 +1,10 @@
 package com.example.pomodoro.SetTimeFunctions;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,7 +67,7 @@ public class SettimeActivity extends AppCompatActivity{
     }
     //3 dialog add item
     private void BreakTimeDialog(){
-        BreakDialog.SetTimeListener listener = new BreakDialog.SetTimeListener() {
+        SettimeDialog.SetTimeListener listener = new SettimeDialog.SetTimeListener() {
             @Override
             public void settimeEntered(String focusValue, String breakValue, String stagesValue) {
                 tx_focus.setText(focusValue);
@@ -77,7 +75,7 @@ public class SettimeActivity extends AppCompatActivity{
                 tx_stages.setText(stagesValue);
             }
         };
-        final BreakDialog dialog = new BreakDialog(this, listener);
+        final SettimeDialog dialog = new SettimeDialog(this, listener);
         dialog.show();
     }
 }

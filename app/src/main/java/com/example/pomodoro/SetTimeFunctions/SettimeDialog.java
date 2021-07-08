@@ -2,7 +2,6 @@ package com.example.pomodoro.SetTimeFunctions;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -12,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.pomodoro.R;
 
-public class BreakDialog extends Dialog {
+public class SettimeDialog extends Dialog {
 
     interface SetTimeListener {
         public void settimeEntered(String focusValue, String breakValue, String stagesValue);
@@ -24,9 +23,9 @@ public class BreakDialog extends Dialog {
     private String focusValue, breakValue, stagesValue;
     private Button buttonOK, buttonCancel;
 
-    private BreakDialog.SetTimeListener listener;
+    private SettimeDialog.SetTimeListener listener;
 
-    public BreakDialog(Context context, BreakDialog.SetTimeListener listener) {
+    public SettimeDialog(Context context, SettimeDialog.SetTimeListener listener) {
         super(context);
         this.context = context;
         this.listener = listener;
