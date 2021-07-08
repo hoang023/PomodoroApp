@@ -77,7 +77,7 @@ public class FirebaseDatabaseHelper {
     }
 
     public void deleteData(String key, final DataStatus dataStatus){
-        mData.child(key).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
+        mData.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 dataStatus.DataIsDeleted();

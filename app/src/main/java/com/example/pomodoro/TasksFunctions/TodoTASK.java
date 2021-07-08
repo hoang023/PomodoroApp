@@ -15,11 +15,9 @@ public class TodoTASK {
         Status = status;
     }
 
-    public String getId() { return Id;
-    }
+    public String getId() { return Id; }
 
-    public void setId(String id) { Id = id;
-    }
+    public void setId(String id) { Id = id; }
 
     public String getContent() {
         return Content;
