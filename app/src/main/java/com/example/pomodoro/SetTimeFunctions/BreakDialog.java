@@ -96,7 +96,7 @@ public class BreakDialog extends Dialog {
         breakTime = breakValue;
         stagesTime = stagesValue;
 
-        if (focusTime=="0" || breakTime=="0" ||stagesTime=="0"){
+        if (focusTime==null || breakTime==null ||stagesTime==null){
             Toast.makeText(this.context, "The value is invalid" +
                     "\nPlease set all three values", Toast.LENGTH_LONG).show();
             return;

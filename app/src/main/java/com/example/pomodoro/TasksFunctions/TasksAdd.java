@@ -93,6 +93,7 @@ public class TasksAdd extends BottomSheetDialogFragment {
             String task = tasksEdt.getText().toString();
                 if (task.isEmpty()) {
                     Toast.makeText(context, "Empty task not allowed !!!", Toast.LENGTH_LONG).show();
+                    return;
                 } else {
                     String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
                     String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
