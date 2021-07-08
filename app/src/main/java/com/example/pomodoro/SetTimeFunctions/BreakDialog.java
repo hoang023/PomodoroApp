@@ -2,6 +2,7 @@ package com.example.pomodoro.SetTimeFunctions;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -95,9 +96,9 @@ public class BreakDialog extends Dialog {
         breakTime = breakValue;
         stagesTime = stagesValue;
 
-        if (focusValue=="0" || breakValue==null ||stagesValue==null){
+        if (focusTime=="0" || breakTime=="0" ||stagesTime=="0"){
             Toast.makeText(this.context, "The value is invalid" +
-                    "\nPlease correct by the following rule", Toast.LENGTH_LONG).show();
+                    "\nPlease set all three values", Toast.LENGTH_LONG).show();
             return;
         }
 

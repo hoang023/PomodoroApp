@@ -116,7 +116,6 @@ public class TasksActivity extends AppCompatActivity {
         });
 
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
-
     }
 
     ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0 , ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -137,7 +136,7 @@ public class TasksActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                adapter.deleteData(TasksActivity.this,itemViewHolder.id);
+                                adapter.deleteData(TasksActivity.this, itemViewHolder.id);
                             }
                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
@@ -149,7 +148,7 @@ public class TasksActivity extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }else{
-                    adapter.updateData(TasksActivity.this,itemViewHolder.id,itemViewHolder.content);
+                    adapter.updateData(TasksActivity.this, itemViewHolder.id, itemViewHolder.content);
             }
         }
 

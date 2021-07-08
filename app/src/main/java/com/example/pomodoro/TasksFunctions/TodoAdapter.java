@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,8 +26,11 @@ import com.example.pomodoro.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -65,7 +70,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
         holder.id=id;
         holder.content=content;
 
-        checkBox.setText(content);
+        checkBox.setText(holder.content);
         checkBox.setChecked(currentTask.getStatus()!=0);
 
         String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
@@ -74,6 +79,24 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
         DatabaseReference dataRef=FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(year).child(month).child("Task");
 
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            dataRef.child(holder.id).child("Status").addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+//                    int status = snapshot.getValue(int.class);
+//                    if (status==1){
+//                        dataRef.child(holder.id).child("Status").setValue(1);
+//                        tasksTv.setPaintFlags(tasksTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//                    }else {
+//                        dataRef.child(holder.id).child("Status").setValue(0);
+//                        tasksTv.setPaintFlags(tasksTv.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+//
+//                }
+//            });
             dataRef.child(holder.id).child("Status").setValue(isChecked?1:0).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull @NotNull Task<Void> task) {
@@ -85,6 +108,23 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
                 }
             });
         });
+
+//        dataRef.child(holder.id).child("Status").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                int status = dataSnapshot.getValue(int.class);
+//                if (status==1){
+//                    tasksTv.setPaintFlags(tasksTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//                }else {
+//                    tasksTv.setPaintFlags(tasksTv.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
 //       checkBox.setOnLongClickListener(v ->{
 //           updateData(v.getContext(),currentTask.getId());
@@ -262,5 +302,4 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
             super(itemView);
         }
     }
-
 }
