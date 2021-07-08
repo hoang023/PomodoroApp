@@ -149,7 +149,7 @@ public class TasksActivity extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }else{
-                    adapter.updateData(TasksActivity.this,itemViewHolder.id);
+                    adapter.updateData(TasksActivity.this,itemViewHolder.id,itemViewHolder.content);
             }
         }
 

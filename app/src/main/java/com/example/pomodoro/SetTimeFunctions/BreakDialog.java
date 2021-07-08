@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.example.pomodoro.R;
@@ -14,14 +14,14 @@ import com.example.pomodoro.R;
 public class BreakDialog extends Dialog {
 
     interface SetTimeListener {
-        public void settimeEntered(String settime);
+        public void settimeEntered(String focusValue, String breakValue, String stagesValue);
     }
 
     public Context context;
 
-    private EditText edt_settime;
-    private Button buttonOK;
-    private Button buttonCancel;
+    private NumberPicker focusNumb, breakNumb, stagesNumb;
+    private String focusValue, breakValue, stagesValue;
+    private Button buttonOK, buttonCancel;
 
     private BreakDialog.SetTimeListener listener;
 
@@ -37,11 +37,43 @@ public class BreakDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_breaktime);
 
-        this.edt_settime = (EditText) findViewById(R.id.edt_settime);
-        this.buttonOK = (Button) findViewById(R.id.btnOk);
-        this.buttonCancel  = (Button) findViewById(R.id.btnCancel);
+        this.focusNumb = (NumberPicker) findViewById(R.id.focusValue);
+        focusNumb.setMaxValue(60);
+        focusNumb.setMinValue(0);
+        focusNumb.setValue(0);
+        focusNumb.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                focusValue = String.valueOf(newVal);
+            }
+        });
 
-        this.buttonOK .setOnClickListener(new View.OnClickListener() {
+        this.breakNumb = (NumberPicker) findViewById(R.id.breakValue);
+        breakNumb.setMaxValue(20);
+        breakNumb.setMinValue(0);
+        breakNumb.setValue(0);
+        breakNumb.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                breakValue = String.valueOf(newVal);
+            }
+        });
+
+        this.stagesNumb = (NumberPicker) findViewById(R.id.stagesValue);
+        stagesNumb.setMaxValue(6);
+        stagesNumb.setMinValue(0);
+        stagesNumb.setValue(0);
+        stagesNumb.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                stagesValue = String.valueOf(newVal);
+            }
+        });
+
+        this.buttonOK = (Button) findViewById(R.id.buttonOK);
+        this.buttonCancel  = (Button) findViewById(R.id.buttonCancel);
+
+        this.buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 buttonOKClick();
@@ -57,24 +89,22 @@ public class BreakDialog extends Dialog {
 
     // User click "OK" button.
     private void buttonOKClick()  {
-        String settime = this.edt_settime.getText().toString();
+        String focusTime, breakTime, stagesTime;
 
-        if(settime== null || settime.isEmpty())  {
-            Toast.makeText(this.context, "The value can not be empty" +
-                    "\nPlease input the valid number", Toast.LENGTH_LONG).show();
+        focusTime = focusValue;
+        breakTime = breakValue;
+        stagesTime = stagesValue;
+
+        if (focusValue=="0" || breakValue==null ||stagesValue==null){
+            Toast.makeText(this.context, "The value is invalid" +
+                    "\nPlease correct by the following rule", Toast.LENGTH_LONG).show();
             return;
         }
-        else {
-            int val = Integer.parseInt(settime);
-            if ((val<1) || (val>20)){
-                Toast.makeText(this.context, "The value is invalid" +
-                        "\nPlease correct by the following rule", Toast.LENGTH_LONG).show();
-                return;}
-        }
+
         this.dismiss(); // Close Dialog
 
-        if(this.listener!= null)  {
-            this.listener.settimeEntered(settime);
+        if (this.listener != null) {
+            this.listener.settimeEntered(focusTime, breakTime, stagesTime);
         }
     }
 

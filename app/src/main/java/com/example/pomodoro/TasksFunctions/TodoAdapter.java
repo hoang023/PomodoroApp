@@ -60,7 +60,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
         TodoTASK currentTask=tasks.get(position);
         checkBox = holder.itemView.findViewById(R.id.checkBox);
 
-        checkBox.setText(currentTask.getContent());
+        final String id = currentTask.getId();
+        final String content = currentTask.getContent();
+        holder.id=id;
+        holder.content=content;
+
+        checkBox.setText(content);
         checkBox.setChecked(currentTask.getStatus()!=0);
 
         String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
@@ -69,22 +74,17 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
         DatabaseReference dataRef=FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(year).child(month).child("Task");
 
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            dataRef.child(currentTask.getId()).child("Status").setValue(isChecked?1:0).addOnCompleteListener(new OnCompleteListener<Void>() {
+            dataRef.child(holder.id).child("Status").setValue(isChecked?1:0).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull @NotNull Task<Void> task) {
                     if(task.isSuccessful()){
-                        Log.d("","Completed");
+                        Log.d("",holder.id);
                     }else{
                         //TODO handling error
                     }
                 }
             });
         });
-
-        final String id = currentTask.getId();
-        final String content = currentTask.getContent();
-        holder.id=id;
-        holder.content=content;
 
 //       checkBox.setOnLongClickListener(v ->{
 //           updateData(v.getContext(),currentTask.getId());
@@ -170,7 +170,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
 //            dialog.show();
 //        }
 
-        public void updateData(Context mContext, String taskID){
+        public void updateData(Context mContext, String taskID, String content){
             AlertDialog.Builder myDialog = new AlertDialog.Builder(mContext);
             LayoutInflater inflater = LayoutInflater.from(mContext);
             View view = inflater.inflate(R.layout.detail_tasks, null);
@@ -179,10 +179,11 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
             AlertDialog dialog = myDialog.create();
 
             EditText updateEdt = view.findViewById(R.id.updateEdt);
-            updateEdt.setText(checkBox.getText());
+            updateEdt.setText(content);
             updateEdt.setSelection(checkBox.getText().length());
 
             Button saveuptBtn = view.findViewById(R.id.saveuptBtn);
+            Button cancelBtn = view.findViewById(R.id.cancelBtn);
 
             //Sua task
             saveuptBtn.setOnClickListener(new View.OnClickListener() {
@@ -211,6 +212,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
 
                         }
                     });
+                    dialog.dismiss();
+                }
+            });
+            cancelBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     dialog.dismiss();
                 }
             });
