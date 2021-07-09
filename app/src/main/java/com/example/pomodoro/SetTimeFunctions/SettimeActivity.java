@@ -30,6 +30,7 @@ public class SettimeActivity extends AppCompatActivity{
     DatabaseReference mref = database.getReference();
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,7 @@ public class SettimeActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(SettimeActivity.this, TasksActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         //Chuyển qua màn hình statiscal
@@ -50,6 +52,7 @@ public class SettimeActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent =new Intent(SettimeActivity.this, StatisticalActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         /*Dialog add item
@@ -103,8 +106,16 @@ public class SettimeActivity extends AppCompatActivity{
         returnbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettimeActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
+//                Intent intent =new Intent(SettimeActivity.this, MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//                finish();
+//                Intent intent=new Intent(SettimeActivity.this, MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |  Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//// Add an extra that specifies the name of the class that should be started by MainActivity
+//                intent.putExtra("startActivity", MainActivity.class.getName());
+//                startActivity(intent);
             }
         });
     }

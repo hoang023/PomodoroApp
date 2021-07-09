@@ -87,6 +87,17 @@ public class MainActivity extends AppCompatActivity {
     String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
     String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
     DatabaseReference mref_Pomo = mref.child(year).child(month).child("Pomodoro");
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        // Check if we should launch another Activity
+//        super.onNewIntent(intent);
+//        if (intent.hasExtra("startActivity")) {
+//            // Start the desired Activity
+//            String activityName = intent.getStringExtra("startActivity");
+//            Intent dispatchIntent = new Intent(this, Class.forName(activityName));
+//            startActivity(dispatchIntent);
+//        }
+//    }
 
 
     @Override

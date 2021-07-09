@@ -21,13 +21,19 @@
         <activity android:name=".SignInActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".Statistical.StatisticalActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity"
+            android:clearTaskOnLaunch="true"
+            android:finishOnTaskLaunch = "true"/>
         <activity
             android:name=".SetTimeFunctions.SettimeActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:finishOnTaskLaunch = "true"
+            android:clearTaskOnLaunch="true"/>
         <activity
             android:name=".TasksFunctions.TasksActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:finishOnTaskLaunch = "true"
+            android:clearTaskOnLaunch="true"/>
     </application>
 
 </manifest>
