@@ -38,6 +38,7 @@ public class TasksActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =new Intent(TasksActivity.this, SettimeActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -47,6 +48,7 @@ public class TasksActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =new Intent(TasksActivity.this, StatisticalActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
