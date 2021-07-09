@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -65,7 +65,7 @@ public class TasksAdd extends BottomSheetDialogFragment {
         tasksEdt = view.findViewById(R.id.tasksEdt);
         saveBtn = view.findViewById(R.id.saveBtn);
 
-
+        //Bat su kien cho button dua theo trang thai cua task edittext
         tasksEdt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -91,38 +91,43 @@ public class TasksAdd extends BottomSheetDialogFragment {
 
         saveBtn.setOnClickListener(v -> {
             String task = tasksEdt.getText().toString();
+                if (task.isEmpty()) {
+                    Toast.makeText(context, "Empty task not allowed !!!", Toast.LENGTH_LONG).show();
+                    return;
+                } else {
+                    String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
+                    String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
+                    FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
+                    String UId = currentU.getUid();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference mData = database.getReference("User").child(UId)
+                            .child(year).child(month).child("Task");
+                    Map<String, Object> taskMap = new HashMap<>();
 
-            if (task.isEmpty()) {
-                Toast.makeText(context, "Empty task not allowed !!!", Toast.LENGTH_LONG).show();
-            } else {
-                String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
-                String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
+                    taskMap.put("Content", task);
+                    taskMap.put("Status", 0);
 
-                Map<String, Object> taskMap = new HashMap<>();
+                    TodoTASK newTask=new TodoTASK();
+                    newTask.setContent(task);
+                    newTask.setStatus(0);
 
-                taskMap.put("Content",task);
-                taskMap.put("Status",0);
+                    // thì ngay chỗ này mình push là push một cái object TodoTASK lên luôn k phải 1 cái map
+                    //vì sẽ k lấy data về được
 
-                FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
-                String UId = currentU.getUid();
+                    newTask.setId(mData.push().getKey());
 
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference mData = database.getReference("User").child(UId)
-                        .child(year).child(month).child("Task");
-
-                String key = mData.push().getKey();
-
-                mData.child(key).setValue(taskMap, new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                        if (error == null) {
-                            Toast.makeText(context, "Task Saved", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(context, "Task Not Saved", Toast.LENGTH_SHORT).show();
+                    mData.child(newTask.getId()).setValue(taskMap, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            if (error == null) {
+                                Toast.makeText(context, "Task Saved", Toast.LENGTH_SHORT).show();
+                                Log.d("NEW TASK ID",newTask.getId());
+                            } else {
+                                Toast.makeText(context, "Task Not Saved", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
             dismiss();
         });
     }

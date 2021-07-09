@@ -1,49 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_height="match_parent"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:background="#fff"
-    android:layout_width="300dp"
-    android:paddingTop="10dp">
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Add break time"
-        android:textSize="30dp"
-        android:textStyle="bold"></TextView>
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:weightSum="3">
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="The number must be between 1 and 20"
-        android:textSize="15dp"
-        android:textStyle="italic"></TextView>
-
-    <EditText android:layout_height="wrap_content"
-        android:id="@+id/edt_settime"
-        android:layout_width="match_parent"
-        android:inputType="number">
-        <requestFocus></requestFocus>
-    </EditText>
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout1">
-        <Button android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/focusTV"
+            android:layout_width="10dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:id="@+id/btnOk"
-            android:text="Ok">
-        </Button>
-        <Button android:layout_width="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:text="Focus"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/breakTv"
+            android:layout_width="10dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:id="@+id/btnCancel"
-            android:text="Cancel">
-        </Button>
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:text="Break"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/stagesTv"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:text="Stages"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:weightSum="3">
+
+        <NumberPicker
+            android:id="@+id/focusValue"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/main_color"
+            android:solidColor="@color/white"/>
+
+        <NumberPicker
+            android:id="@+id/breakValue"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/main_color"
+            android:solidColor="@color/white" />
+
+        <NumberPicker
+            android:id="@+id/stagesValue"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/main_color"
+            android:solidColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp">
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_marginTop="15dp"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/main_color"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"/>
+
+        <Button
+            android:id="@+id/buttonOK"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/main_color"
+            android:text="Ok"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

@@ -59,7 +59,7 @@ public class SettimeActivity extends AppCompatActivity{
         this.tx_focus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FoscusTimeDialog();
+                BreakTimeDialog();
             }
         });
         this.tx_break = (TextView) findViewById(R.id.tx_breaktime);
@@ -72,7 +72,7 @@ public class SettimeActivity extends AppCompatActivity{
         this.tx_stages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SatgesDialog();
+                BreakTimeDialog();
             }
         });
         //save
@@ -109,36 +109,16 @@ public class SettimeActivity extends AppCompatActivity{
         });
     }
     //3 dialog add item
-    private void FoscusTimeDialog()  {
-        FocusDialog.SetTimeListener listener = new FocusDialog.SetTimeListener() {
-            @Override
-            public void settimeEntered(String settime) {
-                tx_focus.setText(settime);
-            }
-        };
-        final FocusDialog dialog = new FocusDialog(this, listener);
-        dialog.show();
-    }
-
     private void BreakTimeDialog(){
-        BreakDialog.SetTimeListener listener = new BreakDialog.SetTimeListener() {
+        SettimeDialog.SetTimeListener listener = new SettimeDialog.SetTimeListener() {
             @Override
-            public void settimeEntered(String settime) {
-                tx_break.setText(settime);
+            public void settimeEntered(String focusValue, String breakValue, String stagesValue) {
+                tx_focus.setText(focusValue);
+                tx_break.setText(breakValue);
+                tx_stages.setText(stagesValue);
             }
         };
-        final BreakDialog dialog = new BreakDialog(this, listener);
-        dialog.show();
-    }
-
-    private void SatgesDialog(){
-        StagesDialog.SetTimeListener listener = new StagesDialog.SetTimeListener(){
-            @Override
-            public void settimeEntered(String settime) {
-                tx_stages.setText(settime);
-            }
-        };
-        final StagesDialog dialog = new StagesDialog(this, listener);
+        final SettimeDialog dialog = new SettimeDialog(this, listener);
         dialog.show();
     }
 }

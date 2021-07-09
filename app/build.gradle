@@ -39,6 +39,7 @@ dependencies {
     implementation 'com.android.support:support-annotations:28.0.0'
     implementation 'org.jetbrains:annotations:21.0.1'
     implementation 'com.google.firebase:firebase-database:20.0.0'
+    implementation 'androidx.work:work-runtime:2.5.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -46,6 +47,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
+<<<<<<< HEAD
     implementation 'com.google.firebase:firebase-firestore:23.0.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.+'
     def nav_version = "2.3.5"
@@ -54,5 +56,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
     apply plugin: 'com.google.gms.google-services'
+=======
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
+}
+>>>>>>> origin/Vy-new
 
 }
