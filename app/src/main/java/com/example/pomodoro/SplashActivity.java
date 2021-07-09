@@ -9,14 +9,26 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.annotations.NotNull;
 
 public class SplashActivity extends AppCompatActivity {
 
     TextView loadTxt, madeTxt;
     ImageView iconImage, pomodoroImage, loadingCircle;
     Animation topAnm, bottomAnm, rotate;
+    FirebaseAuth mFirebaseAuth;
+    FirebaseAuth.AuthStateListener mAuthStateListener;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    //firebaseUser = firebaseAuth.getCurrentUser();
+
+
+    //mFirebaseAuth = FirebaseAuth.getInstance();
 
 
     @Override
@@ -40,15 +52,44 @@ public class SplashActivity extends AppCompatActivity {
         iconImage.setAnimation(topAnm);
         pomodoroImage.setAnimation(bottomAnm);
         madeTxt.setAnimation(bottomAnm);
-
-        int SPLASH_SCREEN = 3000;
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
-                startActivity(intent);
-                finish();
+            public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null){
+                    int SPLASH_SCREEN = 3000;
+                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            finish();
+
+                        }
+                    }, SPLASH_SCREEN);
+                }
+                else {
+                    int SPLASH_SCREEN = 3000;
+                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(SplashActivity.this, SignInActivity.class));
+                            finish();
+                        }
+                    }, SPLASH_SCREEN);
+                }
             }
-        }, SPLASH_SCREEN);
+        };
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 }
