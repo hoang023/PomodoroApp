@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean timerRunning ;
     private TextView stage;
     private TextView tx_status;
+    private  Button signoutbtn;
 
     private ImageView detail;
     private Button set;
@@ -122,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
                     totalTime = Integer.parseInt(pomodoro.getTotalTime().toString());
                 }
 
-
             }
 
             @Override
@@ -151,6 +151,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError error) {
 
+            }
+        });
+        //Đăng xuất
+        signoutbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 
@@ -308,6 +319,7 @@ public class MainActivity extends AppCompatActivity {
         progressBarCircle = (ProgressBar) findViewById(R.id.bg2);
         stage = (TextView) findViewById(R.id.stage);
         tx_status =(TextView) findViewById(R.id.status);
+        signoutbtn = (Button) findViewById(R.id.logoutbutton);
 
     }
     private void setProgressBarValues() {
