@@ -123,14 +123,14 @@
                 android:background="@drawable/skip" />
 
             <Button
-                android:id="@+id/taskbutton"
+                android:id="@+id/setbutton"
                 android:layout_width="100dp"
                 android:layout_height="115dp"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/set" />
 
             <Button
-                android:id="@+id/setbutton"
+                android:id="@+id/taskbutton"
                 android:layout_width="100dp"
                 android:layout_height="115dp"
                 android:layout_marginLeft="5dp"
@@ -158,7 +158,7 @@
                 android:layout_toLeftOf="@+id/detailtbutton"
                 android:background="@drawable/stage" />
             <Button
-                android:id="@+id/detailtbutton"
+                android:id="@+id/return_statistical_btn"
                 android:layout_width="171dp"
                 android:layout_height="75dp"
                 android:layout_alignParentRight="true"

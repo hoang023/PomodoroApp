@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.example.pomodoro.TasksFunctions.TodoTASK;
 import com.github.mikephil.charting.data.Entry;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,21 +42,27 @@ public class DataLoader {
                     .child(mUserId)
                     .child("2021")
                     .child(monthList[i])
-                    .child("Task").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    int numOfTask = (int) snapshot.getChildrenCount();
-                    taskList.add(new Entry(finalI + 1, numOfTask));
+                    .child("Task")
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                            int x = 0;
+                            for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                                TodoTASK todoTASK = dataSnapshot.getValue(TodoTASK.class);
+                                if (todoTASK.getStatus() == 1) {
+                                    x+=1;
+                                };
+                            }
+                            taskList.add(new Entry(finalI + 1, x));
+                            if (finalI == monthList.length - 1) {
+                                mDataLoadListener.onDataLoadComplete();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-                    if (finalI == monthList.length - 1) {
-                        mDataLoadListener.onDataLoadComplete();
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
+                        }
+                    });
         }
 
     }

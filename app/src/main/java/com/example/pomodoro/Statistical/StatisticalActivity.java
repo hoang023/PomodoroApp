@@ -1,5 +1,6 @@
 package com.example.pomodoro.Statistical;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pomodoro.R;
+import com.example.pomodoro.SetTimeFunctions.SettimeActivity;
+import com.example.pomodoro.TasksFunctions.TasksActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -33,6 +36,7 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
 
     private String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+
     String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
     String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
 
@@ -43,7 +47,7 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
     private LineChart task_lineChart, pomodoro_lineChart;
     FirebaseDatabase firebaseDatabase, monthDatabase2;
     DatabaseReference databaseReference;
-    private Button task_btn, pomodoro_btn;
+    private Button task_btn, pomodoro_btn, return_btn, addTask_btn, set_btn;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +65,29 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
         pomodoro_btn = (Button) findViewById(R.id.pomodoro_statistic_btn);
         mPomodotoloader.getTotalTimePomodoro();
         mDataloader.getData();
+        addTask_btn = (Button) findViewById(R.id.taskbutton);
+        set_btn = (Button) findViewById(R.id.setbutton);
+        return_btn = (Button) findViewById(R.id.return_statistical_btn);
+        addTask_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StatisticalActivity.this, TasksActivity.class));
+                finish();
+            }
+        });
+        set_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StatisticalActivity.this, SettimeActivity.class));
+                finish();
+            }
+        });
+        return_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         task_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,9 +106,9 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
     }
     public void onDataLoadComplete() {
         taskList = mDataloader.getTaskList();
-        LineDataSet set1 =new LineDataSet(taskList, "Task statistical");
+        LineDataSet set1 =new LineDataSet(taskList, "x: Month           y: Task Completed");
         task_lineChart.getLegend().setTextColor(Color.WHITE);
-        task_lineChart.getLegend().setForm(Legend.LegendForm.LINE);
+        task_lineChart.getLegend().setForm(Legend.LegendForm.CIRCLE);
         task_lineChart.setViewPortOffsets(100,100,100,70);
         task_lineChart.setPinchZoom(false);
         task_lineChart.setDrawGridBackground(false);
@@ -121,9 +148,9 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
     @Override
     public void onPomodoroLoadComlete() {
         pomodoroList = mPomodotoloader.getPomodoroList();
-        LineDataSet set =new LineDataSet(pomodoroList, "Pomodoro statistical");
+        LineDataSet set =new LineDataSet(pomodoroList, "x: Month           y: Total concentration time");
         pomodoro_lineChart.getLegend().setTextColor(Color.WHITE);
-        task_lineChart.getLegend().setForm(Legend.LegendForm.LINE);
+        pomodoro_lineChart.getLegend().setForm(Legend.LegendForm.CIRCLE);
         pomodoro_lineChart.setViewPortOffsets(100,100,100,70);
         pomodoro_lineChart.setPinchZoom(false);
         pomodoro_lineChart.setDrawGridBackground(false);
