@@ -2,7 +2,6 @@ package com.example.pomodoro.TasksFunctions;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -32,8 +31,6 @@ public class RecyclerView_Config {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(mDataAdapter);
     }
-
-
     class DataAdapter extends RecyclerView.Adapter<MyViewHolder> {
         private List<Data> todoList;
         private List<String> keys;
@@ -86,7 +83,7 @@ public class RecyclerView_Config {
     }
 
     // Hàm chuyển sang kiểu số cho status: 0 là CHT & 1 là HT
-    private boolean toBoolean(int status){
+    private boolean toBoolean(Long status){
         return status != 0;
     }
 

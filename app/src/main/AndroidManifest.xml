@@ -10,17 +10,27 @@
         android:roundIcon="@mipmap/pomodoro_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pomodoro">
-        <activity android:name=".SplashActivity">
+        <activity android:name=".SignInActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".SignUpActivity" />
+
+        <activity android:name=".SignUpActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Statistical.StatisticalActivity" />
-        <activity android:name=".MainActivity"/>
         <activity
             android:name=".SetTimeFunctions.SettimeActivity"
             android:windowSoftInputMode="adjustPan" />

@@ -12,11 +12,19 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SplashActivity extends AppCompatActivity {
 
     TextView loadTxt, madeTxt;
     ImageView iconImage, pomodoroImage, loadingCircle;
     Animation topAnm, bottomAnm, rotate;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private FirebaseAuth mAuth;
+    private FirebaseUser firebaseUser;
+    FirebaseAuth firebaseAuth;
 
 
     @Override
@@ -45,9 +53,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
-                startActivity(intent);
-                finish();
+                startActivity(new Intent(SplashActivity.this, SignInActivity.class));
             }
         }, SPLASH_SCREEN);
     }

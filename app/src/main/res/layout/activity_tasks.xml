@@ -8,14 +8,6 @@
     android:background="#FFFFFF"
     android:backgroundTint="@android:color/transparent">
 
-    <Button
-        android:id="@+id/logoutbutton"
-        android:layout_width="57dp"
-        android:layout_height="49dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="3dp"
-        android:background="@drawable/logout2" />
 
     <RelativeLayout
         android:layout_width="match_parent"

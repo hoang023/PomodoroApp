@@ -3,13 +3,13 @@ package com.example.pomodoro.TasksFunctions;
 public class Data{
 
     private String Content;
-    private int Status;
+    private Long Status;
 
     public Data() {
         // mặc định khi nhận data từ firebase
     }
 
-    public Data(String content, int status) {
+    public Data(String content, Long status) {
         Content = content;
         Status = status;
     }
@@ -22,11 +22,11 @@ public class Data{
         Content = content;
     }
 
-    public int getStatus() {
+    public Long getStatus() {
         return Status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Long status) {
         Status = status;
     }
 }
