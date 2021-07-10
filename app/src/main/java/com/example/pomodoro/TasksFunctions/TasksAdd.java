@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.pomodoro.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,14 +26,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 public class TasksAdd extends BottomSheetDialogFragment {
 
@@ -95,17 +88,16 @@ public class TasksAdd extends BottomSheetDialogFragment {
                     Toast.makeText(context, "Empty task not allowed !!!", Toast.LENGTH_LONG).show();
                     return;
                 } else {
-                    String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
                     String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
                     FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
                     String UId = currentU.getUid();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference mData = database.getReference("User").child(UId)
-                            .child(year).child(month).child("Task");
+                    DatabaseReference mData = database.getReference("User").child(UId).child("Task");
                     Map<String, Object> taskMap = new HashMap<>();
 
                     taskMap.put("Content", task);
                     taskMap.put("Status", 0);
+                    taskMap.put("month", month);
 
                     TodoTASK newTask=new TodoTASK();
                     newTask.setContent(task);
@@ -115,6 +107,7 @@ public class TasksAdd extends BottomSheetDialogFragment {
                     //vì sẽ k lấy data về được
 
                     newTask.setId(mData.push().getKey());
+                    newTask.setMonth(month);
 
                     mData.child(newTask.getId()).setValue(taskMap, new DatabaseReference.CompletionListener() {
                         @Override

@@ -40,8 +40,6 @@ public class DataLoader {
             int finalI = i;
             FirebaseDatabase.getInstance().getReference().child("User")
                     .child(mUserId)
-                    .child("2021")
-                    .child(monthList[i])
                     .child("Task")
                     .addValueEventListener(new ValueEventListener() {
                         @Override
@@ -49,7 +47,7 @@ public class DataLoader {
                             int x = 0;
                             for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                                 TodoTASK todoTASK = dataSnapshot.getValue(TodoTASK.class);
-                                if (todoTASK.getStatus() == 1) {
+                                if (todoTASK.getMonth().equals(monthList[finalI]) && todoTASK.getStatus() == 1) {
                                     x+=1;
                                 };
                             }
