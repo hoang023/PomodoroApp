@@ -36,6 +36,4 @@ public class Pomodoro {
     public void setTotalTime(String totalTime) {
         TotalTime = totalTime;
     }
-
-
 }
