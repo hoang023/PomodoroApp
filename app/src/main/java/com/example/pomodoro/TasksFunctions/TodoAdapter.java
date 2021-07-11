@@ -127,6 +127,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
             dialog.show();
             notifyDataSetChanged();
         }
+
         public void deleteData(Context mContext, String taskID) {
             new FirebaseDatabaseHelper().deleteData(taskID, new FirebaseDatabaseHelper.DataStatus() {
                 @Override

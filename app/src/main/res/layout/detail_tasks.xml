@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/updateTv"
-        android:layout_width="402dp"
-        android:layout_height="85dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -40,17 +40,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="horizontal"
-        android:layout_below="@+id/updateEdt">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
-
+        android:layout_below="@+id/updateEdt"
+        android:weightSum="2">
             <Button
                 android:id="@+id/cancelBtn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
@@ -61,19 +56,13 @@
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/white"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
+                android:textColor="@color/white"
+                android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/saveuptBtn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -83,9 +72,8 @@
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/white"/>
-
-        </RelativeLayout>
+                android:textColor="@color/white"
+                android:layout_weight="1"/>
     </LinearLayout>
 
 </RelativeLayout>

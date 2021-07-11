@@ -3,10 +3,7 @@ package com.example.pomodoro.TasksFunctions;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,30 +54,6 @@ public class TasksAdd extends BottomSheetDialogFragment {
 
         tasksEdt = view.findViewById(R.id.tasksEdt);
         saveBtn = view.findViewById(R.id.saveBtn);
-
-        //Bat su kien cho button dua theo trang thai cua task edittext
-        tasksEdt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().equals("")) {
-                    saveBtn.setEnabled(false);
-                    saveBtn.setBackgroundColor(Color.DKGRAY);
-                } else {
-                    saveBtn.setEnabled(true);
-                    saveBtn.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         saveBtn.setOnClickListener(v -> {
             String task = tasksEdt.getText().toString();
