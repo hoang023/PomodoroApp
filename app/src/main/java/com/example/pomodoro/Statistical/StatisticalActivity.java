@@ -55,6 +55,7 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
         task_lineChart = findViewById(R.id.task_lineChart);
         task_lineChart.setScaleEnabled(false);
         task_lineChart.setDragEnabled(true);
+        task_lineChart.animateXY(0, 1500);
         pomodoro_lineChart = findViewById(R.id.pomodoro_lineChart);
         pomodoro_lineChart.setScaleEnabled(false);
         pomodoro_lineChart.setDragEnabled(true);
@@ -156,6 +157,7 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
         pomodoro_lineChart.setDrawGridBackground(false);
         pomodoro_lineChart.getDescription().setEnabled(false);
         pomodoro_lineChart.setDrawBorders(true);
+        pomodoro_lineChart.animateXY(0,1500);
         pomodoro_lineChart.setBackgroundColor(Color.rgb(32,2,43));
         set.setColor(Color.rgb(167,191,251));
         set.setCircleColor(Color.rgb(231,15,250));
