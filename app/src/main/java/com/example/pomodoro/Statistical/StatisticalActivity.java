@@ -149,7 +149,7 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
     @Override
     public void onPomodoroLoadComlete() {
         pomodoroList = mPomodotoloader.getPomodoroList();
-        LineDataSet set =new LineDataSet(pomodoroList, "x: Month           y: Total concentration time");
+        LineDataSet set =new LineDataSet(pomodoroList, "x: Month           y: Total concentration time (min)");
         pomodoro_lineChart.getLegend().setTextColor(Color.WHITE);
         pomodoro_lineChart.getLegend().setForm(Legend.LegendForm.CIRCLE);
         pomodoro_lineChart.setViewPortOffsets(100,100,100,70);
