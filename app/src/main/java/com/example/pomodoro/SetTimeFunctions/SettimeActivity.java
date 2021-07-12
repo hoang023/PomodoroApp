@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pomodoro.MainActivity;
 import com.example.pomodoro.R;
 import com.example.pomodoro.Statistical.StatisticalActivity;
 import com.example.pomodoro.TasksFunctions.TasksActivity;
@@ -62,20 +61,20 @@ public class SettimeActivity extends AppCompatActivity{
         this.tx_focus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BreakTimeDialog();
+                SetTimeDialog();
             }
         });
         this.tx_break = (TextView) findViewById(R.id.tx_breaktime);
         this.tx_break.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { BreakTimeDialog();
+            public void onClick(View v) { SetTimeDialog();
             }
         });
         this.tx_stages = (TextView) findViewById(R.id.tx_stagestime);
         this.tx_stages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BreakTimeDialog();
+                SetTimeDialog();
             }
         });
         //save
@@ -120,7 +119,7 @@ public class SettimeActivity extends AppCompatActivity{
         });
     }
     //3 dialog add item
-    private void BreakTimeDialog(){
+    private void SetTimeDialog(){
         SettimeDialog.SetTimeListener listener = new SettimeDialog.SetTimeListener() {
             @Override
             public void settimeEntered(String focusValue, String breakValue, String stagesValue) {

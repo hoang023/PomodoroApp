@@ -2,17 +2,25 @@ package com.example.pomodoro.TasksFunctions;
 
 public class TodoTASK {
 
-    private String Content;
-    private String Id;
+    private String Content, Id, month;
     private int Status;
 
     public TodoTASK() {
         // mặc định khi nhận data từ firebase
     }
 
-    public TodoTASK(String content, int status) {
+    public TodoTASK(String content, int status, String Month) {
         Content = content;
         Status = status;
+        month = Month;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
     }
 
     public String getId() { return Id; }

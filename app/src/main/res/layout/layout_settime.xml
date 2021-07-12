@@ -5,8 +5,9 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
         android:background="#fff"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
@@ -20,8 +21,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="Focus"
-            android:gravity="center"/>
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/breakTv"
@@ -30,8 +33,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="Break"
-            android:gravity="center"/>
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/stagesTv"
@@ -40,14 +45,17 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="Stages"
-            android:gravity="center"/>
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="15dp"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="7dp"
         android:background="#fff"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
@@ -56,42 +64,46 @@
 
         <NumberPicker
             android:id="@+id/focusValue"
-            android:layout_width="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:background="@drawable/main_color"
-            android:solidColor="@color/white"/>
+            android:background="@drawable/main_color1"
+            android:solidColor="@color/white"
+            android:theme="@style/NumberPicker"/>
 
         <NumberPicker
             android:id="@+id/breakValue"
-            android:layout_width="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:background="@drawable/main_color"
-            android:solidColor="@color/white" />
+            android:background="@drawable/main_color1"
+            android:solidColor="@color/white"
+            android:theme="@style/NumberPicker" />
 
         <NumberPicker
             android:id="@+id/stagesValue"
-            android:layout_width="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:background="@drawable/main_color"
-            android:solidColor="@color/white" />
+            android:background="@drawable/main_color1"
+            android:solidColor="@color/white"
+            android:theme="@style/NumberPicker"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp">
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp">
         <Button
             android:id="@+id/buttonCancel"
             android:layout_marginTop="15dp"

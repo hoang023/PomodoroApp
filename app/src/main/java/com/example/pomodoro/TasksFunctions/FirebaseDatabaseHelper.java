@@ -1,7 +1,5 @@
 package com.example.pomodoro.TasksFunctions;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -15,18 +13,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class FirebaseDatabaseHelper {
 
     private FirebaseDatabase database;
     private DatabaseReference mData;
     private FirebaseUser currentU;
-    private String UId, year, month;
+    private String UId;
     private List<TodoTASK> mList = new ArrayList<>();
 
     public interface DataStatus{
@@ -40,9 +35,7 @@ public class FirebaseDatabaseHelper {
         database = FirebaseDatabase.getInstance();
         currentU = FirebaseAuth.getInstance().getCurrentUser();
         UId = currentU.getUid();
-        year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
-        month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
-        mData = database.getReference("User").child(UId).child(year).child(month).child("Task");
+        mData = database.getReference("User").child(UId).child("Task");
     }
 
     public void showData(final DataStatus dataStatus) {
