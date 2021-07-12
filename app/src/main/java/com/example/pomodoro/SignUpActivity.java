@@ -80,16 +80,28 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
-                    String UId = currentU.getUid();
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    Toast.makeText(getApplicationContext(), "Account successfully created", Toast.LENGTH_SHORT).show();
+                    mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
+                                String UId = currentU.getUid();
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                Toast.makeText(getApplicationContext(), "Account successfully created. Please check your email for verification", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
-                    startActivity(intent);
-                    DatabaseReference databaseReference = database.getReference().child("User").child(UId).child("SetTime");
-                     Status status = new Status("0","0","0");
-                    databaseReference.setValue(status);
+                                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                                startActivity(intent);
+                                DatabaseReference databaseReference = database.getReference().child("User").child(UId).child("SetTime");
+                                Status status = new Status("0","0","0");
+                                databaseReference.setValue(status);
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(), "Account failed created", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Account failed created", Toast.LENGTH_SHORT).show();
                 }

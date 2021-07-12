@@ -123,14 +123,14 @@
                 android:background="@drawable/skip" />
 
             <Button
-                android:id="@+id/taskbutton"
+                android:id="@+id/setbutton"
                 android:layout_width="100dp"
                 android:layout_height="115dp"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/set" />
 
             <Button
-                android:id="@+id/setbutton"
+                android:id="@+id/taskbutton"
                 android:layout_width="100dp"
                 android:layout_height="115dp"
                 android:layout_marginLeft="5dp"
@@ -149,21 +149,27 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="8dp">
         <TableRow>
-            <Button
+            <TextView
+                android:id="@+id/stage"
                 android:layout_width="171dp"
                 android:layout_height="75dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="5dp"
                 android:layout_marginLeft="6dp"
-                android:layout_toLeftOf="@+id/detailtbutton"
-                android:background="@drawable/stage" />
-            <Button
+                android:layout_marginRight="3dp"
+                android:background="@drawable/stage"
+                android:text="0/0"
+                android:textSize="40dp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:paddingLeft="70dp"/>
+
+            <ImageView
                 android:id="@+id/detailtbutton"
                 android:layout_width="171dp"
                 android:layout_height="75dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="6dp"
+                android:layout_marginLeft="3dp"
                 android:background="@drawable/statistic_return" />
         </TableRow>
     </TableLayout>

@@ -7,6 +7,7 @@ import androidx.core.app.NotificationCompat;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -88,18 +89,6 @@ public class MainActivity extends AppCompatActivity {
     String year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
     String month = new SimpleDateFormat("MMM", Locale.getDefault()).format(new Date());
     DatabaseReference mref_Pomo = mref.child(year).child(month).child("Pomodoro");
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        // Check if we should launch another Activity
-//        super.onNewIntent(intent);
-//        if (intent.hasExtra("startActivity")) {
-//            // Start the desired Activity
-//            String activityName = intent.getStringExtra("startActivity");
-//            Intent dispatchIntent = new Intent(this, Class.forName(activityName));
-//            startActivity(dispatchIntent);
-//        }
-//    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,7 +182,9 @@ public class MainActivity extends AppCompatActivity {
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String strStage = stage.getText().toString();
                 Intent intent =new Intent(MainActivity.this, StatisticalActivity.class);
+                intent.putExtra("key_stage",strStage);
                 startActivity(intent);
             }
         });
@@ -201,7 +192,9 @@ public class MainActivity extends AppCompatActivity {
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String strStage = stage.getText().toString();
                 Intent intent =new Intent(MainActivity.this, SettimeActivity.class);
+                intent.putExtra("key_stage",strStage);
                 startActivity(intent);
             }
         });
@@ -209,7 +202,9 @@ public class MainActivity extends AppCompatActivity {
         tasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String strStage = stage.getText().toString();
                 Intent intent =new Intent(MainActivity.this, TasksActivity.class);
+                intent.putExtra("key_stage",strStage);
                 startActivity(intent);
             }
         });
@@ -396,6 +391,7 @@ public class MainActivity extends AppCompatActivity {
                 .setSound(sound)
                 .setColor(getResources().getColor(R.color.pink))
                 .setAutoCancel(true)
+                .setOngoing(true)
                 .build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if(notificationManager != null)

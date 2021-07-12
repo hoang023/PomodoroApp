@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ import com.example.pomodoro.Statistical.StatisticalActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -32,7 +35,9 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 public class TasksActivity extends AppCompatActivity {
 
-    private Button set, detail;
+    private Button set,returnButton;
+    private ImageView detail;
+    private TextView stage;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private final TodoAdapter adapter=new TodoAdapter();
@@ -42,25 +47,39 @@ public class TasksActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
+        stage =(TextView) findViewById(R.id.stage);
+        stage.setText(getIntent().getStringExtra("key_stage"));
+
 
         //Chuyen man hinh qua set time
         set = (Button) findViewById(R.id.setbutton);
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String strStage = stage.getText().toString();
                 Intent intent = new Intent(TasksActivity.this, SettimeActivity.class);
+                intent.putExtra("key_stage",strStage);
                 startActivity(intent);
                 finish();
             }
         });
 
         //Chuyen man hinh qua detail
-        detail = (Button) findViewById(R.id.detailtbutton);
+        detail = (ImageView) findViewById(R.id.detailtbutton);
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String strStage = stage.getText().toString();
                 Intent intent = new Intent(TasksActivity.this, StatisticalActivity.class);
+                intent.putExtra("key_stage",strStage);
                 startActivity(intent);
+                finish();
+            }
+        });
+        returnButton=(Button) findViewById(R.id.returnbutton) ;
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });

@@ -75,8 +75,14 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),"Login successful!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                    if(mAuth.getCurrentUser().isEmailVerified()){
+                        Toast.makeText(getApplicationContext(),"Login successful!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Please verify your email address", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "Your email address or password you entered is incorrect", Toast.LENGTH_SHORT).show();

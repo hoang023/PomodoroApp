@@ -1,15 +1,20 @@
 package com.example.pomodoro.Statistical;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pomodoro.R;
+import com.example.pomodoro.SetTimeFunctions.SettimeActivity;
+import com.example.pomodoro.TasksFunctions.TasksActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -44,10 +49,15 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
     FirebaseDatabase firebaseDatabase, monthDatabase2;
     DatabaseReference databaseReference;
     private Button task_btn, pomodoro_btn;
+    private Button setButton, taskButton;
+    private ImageView returnButton;
+    private TextView stage;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistical);
+        stage =(TextView) findViewById(R.id.stage);
+        stage.setText(getIntent().getStringExtra("key_stage"));
         task_lineChart = findViewById(R.id.task_lineChart);
         task_lineChart.setScaleEnabled(false);
         task_lineChart.setDragEnabled(true);
@@ -59,6 +69,9 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
         monthDatabase2 = FirebaseDatabase.getInstance();
         task_btn = (Button) findViewById(R.id.task_statistic_btn);
         pomodoro_btn = (Button) findViewById(R.id.pomodoro_statistic_btn);
+        setButton =(Button) findViewById(R.id.setbutton);
+        taskButton = (Button) findViewById(R.id.taskbutton);
+        returnButton =(ImageView) findViewById(R.id.detailtbutton);
         mPomodotoloader.getTotalTimePomodoro();
         mDataloader.getData();
         task_btn.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +87,32 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
             public void onClick(View v) {
                 pomodoro_lineChart.setVisibility(View.VISIBLE);
                 task_lineChart.setVisibility(View.INVISIBLE);
+            }
+        });
+        setButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String strStage = stage.getText().toString();
+                Intent intent = new Intent(StatisticalActivity.this, SettimeActivity.class);
+                intent.putExtra("key_stage",strStage);
+                startActivity(intent);
+                finish();
+            }
+        });
+        taskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String strStage = stage.getText().toString();
+                Intent intent = new Intent(StatisticalActivity.this, TasksActivity.class);
+                intent.putExtra("key_stage",strStage);
+                startActivity(intent);
+                finish();
+            }
+        });
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
