@@ -108,9 +108,10 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
     public void onDataLoadComplete() {
         taskList = mDataloader.getTaskList();
         LineDataSet set1 =new LineDataSet(taskList, "x: Month           y: Task Completed");
-        task_lineChart.getLegend().setTextColor(Color.WHITE);
+        task_lineChart.getLegend().setTextColor(Color.YELLOW);
+        task_lineChart.getLegend().setTextSize(15);
         task_lineChart.getLegend().setForm(Legend.LegendForm.CIRCLE);
-        task_lineChart.setViewPortOffsets(100,100,100,70);
+        task_lineChart.setViewPortOffsets(100,100,100,100);
         task_lineChart.setPinchZoom(false);
         task_lineChart.setDrawGridBackground(false);
         task_lineChart.getDescription().setEnabled(false);
@@ -119,7 +120,7 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
         set1.setColor(Color.rgb(167,191,251));
         set1.setCircleColor(Color.rgb(231,15,250));
         set1.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-        set1.setValueTextSize(10);
+        set1.setValueTextSize(12);
         set1.setDrawFilled(true);
         set1.setCircleRadius(4);
         set1.setCircleHoleRadius(3);
@@ -150,9 +151,10 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
     public void onPomodoroLoadComlete() {
         pomodoroList = mPomodotoloader.getPomodoroList();
         LineDataSet set =new LineDataSet(pomodoroList, "x: Month           y: Total concentration time (min)");
-        pomodoro_lineChart.getLegend().setTextColor(Color.WHITE);
+        pomodoro_lineChart.getLegend().setTextColor(Color.YELLOW);
+        pomodoro_lineChart.getLegend().setTextSize(15);
         pomodoro_lineChart.getLegend().setForm(Legend.LegendForm.CIRCLE);
-        pomodoro_lineChart.setViewPortOffsets(100,100,100,70);
+        pomodoro_lineChart.setViewPortOffsets(100,100,100,100);
         pomodoro_lineChart.setPinchZoom(false);
         pomodoro_lineChart.setDrawGridBackground(false);
         pomodoro_lineChart.getDescription().setEnabled(false);
@@ -162,7 +164,7 @@ public class StatisticalActivity extends AppCompatActivity implements DataLoadLi
         set.setColor(Color.rgb(167,191,251));
         set.setCircleColor(Color.rgb(231,15,250));
         set.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-        set.setValueTextSize(10);
+        set.setValueTextSize(12);
         set.setDrawFilled(true);
         set.setCircleRadius(4);
         set.setCircleHoleRadius(3);
