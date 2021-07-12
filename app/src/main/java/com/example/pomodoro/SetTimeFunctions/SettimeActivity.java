@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SettimeActivity extends AppCompatActivity{
 
-    private Button tasksbutton, detail, save, returnbutton;
+    private Button tasksbutton, save, returnbutton;
+    private ImageView detail;
+    private TextView stage;
     private TextView tx_focus, tx_break, tx_stages;
     FirebaseUser currentU = FirebaseAuth.getInstance().getCurrentUser();
     String UId = currentU.getUid();
@@ -34,22 +38,28 @@ public class SettimeActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settime);
+        stage =(TextView) findViewById(R.id.stage);
+        stage.setText(getIntent().getStringExtra("key_stage"));
         //Chuyển qua màn hình tasks
         tasksbutton = (Button) findViewById(R.id.tasksbutton);
         tasksbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String strStage = stage.getText().toString();
                 Intent intent = new Intent(SettimeActivity.this, TasksActivity.class);
+                intent.putExtra("key_stage",strStage);
                 startActivity(intent);
                 finish();
             }
         });
         //Chuyển qua màn hình statiscal
-        detail = (Button) findViewById(R.id.detailtbutton );
+        detail = (ImageView) findViewById(R.id.detailtbutton );
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String strStage = stage.getText().toString();
                 Intent intent =new Intent(SettimeActivity.this, StatisticalActivity.class);
+                intent.putExtra("key_stage",strStage);
                 startActivity(intent);
                 finish();
             }
@@ -106,15 +116,6 @@ public class SettimeActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 finish();
-//                Intent intent =new Intent(SettimeActivity.this, MainActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//                finish();
-//                Intent intent=new Intent(SettimeActivity.this, MainActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |  Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//// Add an extra that specifies the name of the class that should be started by MainActivity
-//                intent.putExtra("startActivity", MainActivity.class.getName());
-//                startActivity(intent);
             }
         });
     }
