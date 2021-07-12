@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-firestore:23.0.1'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.+'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     def nav_version = "2.3.5"
     // Java language implementation
     implementation "androidx.navigation:navigation-fragment:$nav_version"
