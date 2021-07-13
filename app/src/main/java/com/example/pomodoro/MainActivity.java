@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                 timeLeftInMilliseconds = 0;
                 setProgressBarValues();
                 stage.setText("0/0");
-                tx_status.setText("Foucus");
+                tx_status.setText("Focus");
                 updateTimer();
                 if(timerRunning) {
                     countDownTimer.cancel();
