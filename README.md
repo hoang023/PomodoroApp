@@ -7,9 +7,9 @@
 # Giảng viên hướng dẫn
 Thầy Nguyễn Tấn Toàn
 # Sinh viên tham gia đồ án
- - Trần Hoàng Long - 19520285
-- Nguyễn Huy Hoàng - 19521952
-- Phạm Hiểu Vy - 19521927
+- Trần Hoàng Long - 19521801
+- Nguyễn Huy Hoàng - 19521538
+- Phạm Hiểu Vy - 19520358
 # Project Description and Content
 - Áp dụng phương pháp Pomodoro vào ứng dụng
 - Cho phép người dùng sử dụng chức năng quên mật khẩu.
